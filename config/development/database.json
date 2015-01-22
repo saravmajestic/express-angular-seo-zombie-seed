@@ -1,0 +1,5 @@
+{
+  "driver": "mongoose",
+  "uri": "mongodb://localhost:27017/seeddatabase",
+  "debug": true
+}
