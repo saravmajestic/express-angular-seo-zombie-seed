@@ -13,6 +13,8 @@ var express = require('express'),
 	path = require('path'),
 	fs = require('fs'),
 	morgan = require('morgan'),
+	session = require('express-session'),
+	MongoStore = require('connect-mongo')(session),
 	device = require('express-device');
 
 var server = express();
@@ -31,7 +33,13 @@ server.use(device.capture());
 server.set('views', __dirname + '/views');
 server.set('view engine', 'html'); // set up html for templating
 server.engine('.html', require('ejs').__express);
-
+server.use(session({
+	resave : false,
+	saveUninitialized : false,
+	name : 'ch.sess.id',
+    secret: 'C63f#057',
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
 morgan.token('sessionId', 
 		function (req, res) {
 		    if (!req.session) return '~'; // should never happen
