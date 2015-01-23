@@ -2,3 +2,6 @@
 node_modules/
 public-build/
 npm-debug.log
+*.project
+TODO.txt
+*.log

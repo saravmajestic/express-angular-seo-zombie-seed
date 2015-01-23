@@ -16,14 +16,18 @@ module.exports = Database = {
 	connectDB: function() {
 	    var config_db = require(ROOT_PATH + '/config/'+ENV+'/database.json');
 	    mongoose.connect(config_db.uri);
-	    mongoose.set('debug', config_db.debug);
 	    // Check connection to mongoDB
 	    mongoose.connection.on('open', function() {
-		    logger.debug('We have connected to mongodb');
+		    logger.info( 'We have connected to mongodb');
 		});
 	    mongoose.connection.on('error', function(err) {
-		    logger.debug('We have error while connecting to mongodb');
+		    logger.error('We have error while connecting to mongodb', err);
 		});
+	    if(config_db.debug){
+		    mongoose.set('debug', function(collectionName, method, query, doc){
+		    	logger.dbquery( "DB: ", collectionName, method, JSON.stringify(query));
+		    	});
+	    }
 	},
 	// disconnect from database
 	closeDB: function() {

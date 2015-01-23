@@ -29,6 +29,8 @@ exports.data = function(req, res){
 	res.json({"isSuccess" : true, data : cities});
 };
 exports.index = function(req, res){
+	logger.info("inside index");
+	
 	res.render('index', {zombie : req.zombie});
 };
 

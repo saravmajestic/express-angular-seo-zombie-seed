@@ -1,4 +1,4 @@
-var Validator 	= require('validator').Validator, utils 	= require('../backend/utils'),
+var Validator 	= require('validator').Validator, utils 	= require('../utils/utils'),
     crypto 		= require('crypto');
 
 var exports = module.exports = UserSchema = new mongoose.Schema({});

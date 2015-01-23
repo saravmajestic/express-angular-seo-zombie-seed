@@ -12,14 +12,15 @@ var express = require('express'),
 	http = require('http'),
 	path = require('path'),
 	fs = require('fs'),
+	morgan = require('morgan'),
 	device = require('express-device');
 
 var server = express();
 exports = app_config = require(ROOT_PATH + '/config/'+ENV+'/app.json');
 
-exports = logger = require(ROOT_PATH + '/app/backend/log');
+exports = logger = require(ROOT_PATH + '/app/utils/log');
 
-require(ROOT_PATH + '/app/backend/database');
+require(ROOT_PATH + '/app/utils/database');
 
 server.set('port', port);
 server.use(bodyParser.json());
@@ -30,7 +31,18 @@ server.use(device.capture());
 server.set('views', __dirname + '/views');
 server.set('view engine', 'html'); // set up html for templating
 server.engine('.html', require('ejs').__express);
-server.use(require('morgan')('dev'));
+
+morgan.token('sessionId', 
+		function (req, res) {
+		    if (!req.session) return '~'; // should never happen
+		    if (req.session.user) {
+		        return "user_id:" + req.session.user.id;
+		    }
+		    else {
+		        return '-';
+		    }
+		});
+server.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url" :status :res[content-length] ":referrer" ":user-agent"  - :response-time ms :sessionId', {"stream": logger.stream}));
 server.use(methodOverride());
 server.use(myErrorHandler);
 
@@ -63,7 +75,7 @@ server.use(function(req, res, next){
 });
 
 //Routes for all commands
-require(ROOT_PATH + '/app/routes/routes.js')(server);
+require('./routes.js')(server);
 
 server.set('jsonp callback name', 'callback');
 
