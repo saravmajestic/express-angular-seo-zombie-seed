@@ -82,8 +82,10 @@ gulp.task('build', function(){
 // Watches JS
 gulp.task('watch', function () {
   livereload.listen(); // Calling lister on livereload task, which will start listening for livereload client.
-  gulp.watch('public/res/js/*.js', ['build']);
-  gulp.watch('public/res/css/*.css', ['build']);
+  gulp.watch('public/res/**/*', ['build']);
+  // gulp.watch('public/res/js/**/*.js', ['build']);
+  //gulp.watch('public/res/css/**/*.css', ['build']);
+  //gulp.watch('public/res/js/**/*.html', ['build']);
 });
 // gulp.task('default', ['uploadJS', 'uploadCSS']);
 gulp.task('default', ['build', 'watch']);

@@ -1,4 +1,36 @@
 <section ng-controller="authController">
     <h1>This is Login Page</h1>
     <p>{{ welcomeMessage }}</p>
+    <p ng-if="user != null">
+    	Welcome {{user.first_name}}
+    	<span>We found your email Id! {{user.email}}</span>
+    </p>
+    <form ng-submit="doSignup();" name="signup" id="signup">
+    	<div>
+    		<input type="text" name="firstname" ng-model="signupData.firstname" placeholder="First name"/>
+    	</div>
+    	<div>
+    		<input type="email" name="email" ng-model="signupData.email" placeholder="email address"/>
+    	</div>
+    	<div>
+    		<input type="password" name="password" ng-model="signupData.password" placeholder="password"/>
+    	</div>
+    	<div>
+    		<input type="submit" name="submit" value="submit"/>
+    	</div>
+    </form>
+    <form ng-submit="dologin();" name="login" id="login">
+    	<div>
+    		<input type="email" name="email" ng-model="loginData.email" placeholder="email address"/>
+    	</div>
+    	<div>
+    		<input type="password" name="password" ng-model="loginData.password" placeholder="password"/>
+    	</div>
+    	<div>
+    		<input type="submit" name="submit" value="Login"/>
+    	</div>
+    </form>
+    <a href="javascript:;" ng-click="doLogin('facebook', 'F')">Facebook</a><br/> 
+    <a href="javascript:;" ng-click="doLogin('google', 'G')">Google</a><br/>
+    <a href="javascript:;" ng-click="doLogin('linkedin', 'L')">LinkedIn</a><br/>
 </section>

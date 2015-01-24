@@ -1,33 +1,3 @@
-exports.data = function(req, res){
-	var cities = [
-		{
-			code: 'boston',
-			displayName: 'Boston, MA',
-			search: 'Boston,%20MA,%20US'
-		},
-		{
-			code: 'new-york',
-			displayName: 'New York, NY',
-			search: 'New%20York,%20NY,%20US'
-		},
-		{
-			code: 'portland',
-			displayName: 'Portland, OR',
-			search: 'Portland,%20OR,%20US'
-		},
-		{
-			code: 'san-francisco',
-			displayName: 'San Francisco, CA',
-			search: 'San%20Francisco%20,%20CA,%20US'
-		},
-		{
-			code: 'seattle',
-			displayName: 'Seattle, WA',
-			search: 'Seattle,%20WA,%20US'
-		}
-	];
-	res.json({"isSuccess" : true, data : cities});
-};
 exports.index = function(req, res){
 	logger.info("inside index");
 	

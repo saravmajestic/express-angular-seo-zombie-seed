@@ -105,7 +105,7 @@ function myErrorHandler(err, req, res, next) {
 }
 
 function getIPAddress() {
-	var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
+	var ipaddress = process.env.NODEJS_IP;
 	if (typeof ipaddress === "undefined") {
 		var os = require('os');
 		var ifaces = os.networkInterfaces();
@@ -119,7 +119,7 @@ function getIPAddress() {
 				}
 			});
 		}
-		console.warn('No OPENSHIFT_NODEJS_IP var, using ' + ipaddress);
+		console.warn('No IP in env variables, now using ' + ipaddress);
 	}
 	return ipaddress;
 }

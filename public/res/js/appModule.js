@@ -12,6 +12,17 @@ define([
     // Declare app level module which depends on filters, and services
 
     var app = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize']);
+    
+    //Handle uncaught errors in app
+    app.factory('$exceptionHandler', function() {
+      return function(exception, cause) {
+        if(cause){
+            exception.message += ' (caused by "' + cause + '")';
+        }
+        alert(exception.message);
+        console.log(exception, exception.stack);
+      };
+    });
 
     app.config(['$routeProvider', '$locationProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$httpProvider',
             function($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $httpProvider) {
@@ -38,14 +49,6 @@ define([
                     $routeProvider.otherwise({ redirectTo: appRoutes.defaultRoutePath });
                 }
 
-    }]);
-
-    app.controller('rootController', ['$scope', '$rootScope', '$window', '$location', '$http', '$route', '$routeParams',
-        function ($scope, $rootScope, $window, $location, $http, $route, $routeParams) {
-            $scope.welcomeMsg = 'Hello World!!!';
-            $scope.$on('$routeChangeStart', function(scope, next, current){
-                console.log('Changing route from '+angular.toJson(current)+' to '+angular.toJson(next));
-            });
     }]);
 
     return app;
