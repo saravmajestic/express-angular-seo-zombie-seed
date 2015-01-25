@@ -9,7 +9,7 @@ exports.signup = function(req, res){
 				}else{
 					logger.info("Signup completed for %s", params.first_name);
 					req.session.user = user;
-					res.json({isSuccess : true, data : user});
+					res.json({isSuccess : true, user : user});
 				}
 			});
 			

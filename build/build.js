@@ -11,10 +11,15 @@
   //List common dependencies here. Only need to list
   //top level dependencies, "include" will find
   //nested dependencies.
+  exclude : [
+    
+  ],
   include: [
     'routeResolve',
     'appRoutes',
-    'appModule'
+    'appModule',
+    'common/ajax',
+    'app/pages/auth/authSvc'
   ]
 },
 
@@ -43,6 +48,7 @@
   name: 'app/pages/auth/authCtrl',
   exclude: ['./appBootstrap'],
   include : [
+    'lib/hello.min',
     'app/pages/auth/authCtrl'
   ]
 }

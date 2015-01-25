@@ -8,7 +8,7 @@ UserSchema.add({
     email:      {type: String, index: true, unique: true },
     provider:   {type: String, index: true, unique: false },
 	password: 	{type: String, select: false},
-  	firstname: 	{type: String, default : '', required : false, index: true },
+  	first_name: 	{type: String, default : '', required : false, index: true },
   	lastname: 	{type: String, default : '', required : false, index: true },
   	picture: 	{type: String, default : '', index: true },
     gender: 	{type: String, default : '', index: false },
@@ -61,7 +61,7 @@ UserSchema.statics.login = function(email, password, callback) {
 			}
 
 		} else {
-			callback(null, null);
+			callback("You are not registered. Please signup.", null);
 		}
 	});
 };
@@ -91,7 +91,7 @@ UserSchema.statics.signup = function(data, callback) {
 		
 	});*/
 
-    User.findOne({email:data.email}, function(err, user) {
+    User.findOne({email:new RegExp(["^",data.email,"$"].join(""),"i")}, function(err, user) {
         if(err){
             callback(err);
         }else
@@ -153,7 +153,7 @@ UserSchema.statics.validatePassword = function(plainPass, hashedPass, callback)
 UserSchema.statics.validateUser = function(req) {
 	req.assert(['User', 'email'], 'Please enter a valid Email').isEmail();		
   	req.assert(['User', 'username'], 'Please enter a Username').notEmpty();
-  	req.assert(['User', 'firstname'], 'Please enter a Firstname.').notEmpty();
+  	req.assert(['User', 'first_name'], 'Please enter a Firstname.').notEmpty();
   	req.assert(['User', 'lastname'], 'Please enter a Lastname.').notEmpty();	
   	req.assert(['User', 'gender'], 'Please fill out gender.').notEmpty();	
 	return req.validationErrors();
@@ -167,7 +167,7 @@ UserSchema.statics.validateUser = function(req) {
 UserSchema.methods.updateAll = function(user, callback) {
 	var User = mongoose.model('User');
 	this.username 		= user.username;
-	this.firstname 	= user.firstname;
+	this.first_name 	= user.first_name;
 	this.lastname 		= user.lastname;
 	this.email 			= user.email;
 	this.gender			= user.gender;

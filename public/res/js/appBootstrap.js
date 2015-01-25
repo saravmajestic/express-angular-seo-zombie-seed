@@ -8,15 +8,13 @@ require.config({
 				angular: 'lib/angular',
         angularRoute: 'lib/angular-route',
         angularResource: 'lib/angular-resource',
-        angularSanitize: 'lib/angular-sanitize',
-        angularMocks: 'lib/angular-mocks'
+        angularSanitize: 'lib/angular-sanitize'
     },
     shim: {
         'angular': {'exports': 'angular'},
         'angularRoute': {deps : ['angular']},
         'angularResource': {deps : ['angular']},
-        'angularSanitize': {deps : ['angular']},
-        'angularMocks': {deps: ['angular'], 'exports': 'angular.mock'}
+        'angularSanitize': {deps : ['angular']}
     },
     priority: ['angular']
 });

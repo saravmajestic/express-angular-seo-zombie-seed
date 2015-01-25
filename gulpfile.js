@@ -70,7 +70,7 @@ gulp.task('uploadCSS', function(){
 // Build resources - JS and CSS
 var shell = require('gulp-shell');
 gulp.task('build', function(){
-  gulp.src('public/res/*')
+  gulp.src('public/')
   .pipe(shell([
     'node build/r.js -o build/build.js optimize=none'
     ]))

@@ -53,7 +53,7 @@ define(['appModule'], function(app) {
             deferred.reject(err);
         };
         
-        var ctx = "http://192.168.1.37:8080/";
+        var ctx = "";
         if (isPost) {
             $http({
                 method: 'POST',
