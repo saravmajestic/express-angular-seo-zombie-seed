@@ -9,8 +9,8 @@ Tech Stack
 
 Frameworks
 =========
-- Express JS
-- AngularJS with requireJS
+- Express JS (4.11.0)
+- AngularJS (1.3.8) with requireJS
 - Zombie for generating pages for SEO
 - hello.js (for social login)
 - Gulp
@@ -26,8 +26,19 @@ Other seed projects were good for development environment and when it comes to a
 - SEO for single page applications using angularJS. Read this blog. I tried angular-server and that gave me good results. But it didnt work out with requireJS. So, I used ZombieJS to generate my html pages in server side and render those for bots 
 - Logging - load my db queries, http requests received and error logs separately. This will be helpful for tracking
 - CDN implementation - this is a common requirement for most of the projects. I have used Google Cloud storage as CDN for this project
-- Social Logins. I used hello.js for accomplishing this
 - Configs for different environment
+
+What is included in this project
+==
+- Your server with different environment configurations
+- MongoDB with mongoose layer. Just update database.json with connection string
+- Single page application (SPA) with angularJS, requireJS
+- Production deployment configuration and tasks for static resources using gulp task and r.js optimizer
+- CDN support (Google Cloud storage - GCS)
+- Gulp task to upload static resources to CDN (GCS)
+- Handling SEO implementation using ZombieJS. All the pages will be generated regularly and it will be served only for bots
+- Session handling using MongoStore
+- Regular login/signup with social Logins. I used hello.js for accomplishing this
 
 Steps to install
 ---
@@ -43,3 +54,4 @@ TODO
 - load combined view files instead of separate partials for each page
 - Avoid adding logs to all folders. Currently logs are cumulatively added for lower levels. If log level is 5, all logs with levels < 4 will include logs of level 5. So it ie getting duplicated.
 - Control loading index.html for unhandled requests. Since I am using * in routes.js, if any the request is not handled, this file will be loaded. 
+- Client side caching data using http://angular-data.pseudobry.com/documentation/api/angular-cache/angular-cache

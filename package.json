@@ -1,5 +1,5 @@
 {
-  "name": "my-seed-project",
+  "name": "angular-spa-seo-project",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -27,6 +27,7 @@
     "mongoose": "3.8.21",
     "morgan": "1.5.1",
     "validator": "3.27.0",
-    "zombie": "2.5.1"
+    "zombie": "2.5.1",
+    "winston" : "0.8.3"
   }
 }
