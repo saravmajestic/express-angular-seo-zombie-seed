@@ -52,7 +52,6 @@ morgan.token('sessionId',
 		});
 server.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url" :status :res[content-length] ":referrer" ":user-agent"  - :response-time ms :sessionId', {"stream": logger.stream}));
 server.use(methodOverride());
-server.use(myErrorHandler);
 
 /**
  * Override res.json to do any pre/post processing
@@ -84,6 +83,7 @@ server.use(function(req, res, next){
 
 //Routes for all commands
 require('./routes.js')(server);
+server.use(myErrorHandler);
 
 server.set('jsonp callback name', 'callback');
 
@@ -98,10 +98,12 @@ server.listen(port, ipaddress, function() {
 });
 
 function myErrorHandler(err, req, res, next) {
-	logger.error(err.stack);
-	res.send(500, {
-		"isSuccess" : false
-	});
+	logger.error("Error happened in %s", req.path, err.stack, err.message, err);
+	var extra = null;
+	if(ENV !== "production"){
+		extra = {stack : err.stack, message : err.message};
+	}
+	res.json({"isSuccess" : false, err : "Internal error happened!", extra : extra});
 }
 
 function getIPAddress() {

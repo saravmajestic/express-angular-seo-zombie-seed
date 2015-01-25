@@ -1,5 +1,4 @@
 exports.signup = function(req, res){
-	try{
 		var params = req.body;
 		var User = mongoose.model('User');
 			User.signup(params, function(err, user){
@@ -13,24 +12,14 @@ exports.signup = function(req, res){
 				}
 			});
 			
-	}catch(err){
-		logger.error("Error in signup: ", err);
-		res.json({isSuccess : false, err : err});
-	}
 };
 exports.logout = function(req, res){
-	try{
 		if(req.session){
 			req.session.destroy();
 		}
 		res.json({isSuccess : true});
-	}catch(err){
-		logger.error("Error in logout: ", err);
-		res.json({isSuccess : false, err : err});
-	}
 };
 exports.login = function(req, res){
-	try{
 		var params = req.body;
 		var User = mongoose.model('User');
 		User.login(params.email, params.password, function(err, user){
@@ -43,13 +32,9 @@ exports.login = function(req, res){
 			}
 		});
 		
-	}catch(err){
-		logger.error("Error in login: ", err);
-		res.json({isSuccess : false, err : err});
-	}
+	
 };
 exports.me = function(req, res){
-	try{
 		if(req.session && req.session.user){
 			var User = mongoose.model('User');
 			User.findOne({email : req.session.user.email}, function(err, userDoc){
@@ -65,8 +50,4 @@ exports.me = function(req, res){
 		}else{
 			res.json({isSuccess : false, user : null});
 		}
-	}catch(err){
-		logger.error("Error in me: ", err);
-		res.json({isSuccess : false, err : err});
-	}
 }

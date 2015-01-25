@@ -5,7 +5,6 @@ exports.index = function(req, res){
 };
 
 exports.snapshot = function(req, res){
-	try{
 		var Browser = require('zombie');
 		var browser = Browser.create();
 		browser.userAgent = "zombiejs";
@@ -18,13 +17,9 @@ exports.snapshot = function(req, res){
 			html = html.replace(/<script.*?>.*?<\/script>/gim, "")
 			res.end(html);
 		});
-	}catch(err){
-		console.log(err);
-	}
 }
 
 exports.upload = function(req, res){
-	try{
 		var service_account_name = app_config.google.service_account_name;
 		var key_file_location = ROOT_PATH + '/keys/google/' + app_config.google.key;
 
@@ -57,7 +52,4 @@ exports.upload = function(req, res){
 			console.log(err, url);
 			res.end(url);
 		});
-	}catch(err){
-		console.log(err);
-	}
 }
