@@ -1,4 +1,5 @@
-var home = require(ROOT_PATH + '/app/controllers/home'),
+var path = require('path'),
+  home = require(ROOT_PATH + '/app/controllers/home'),
 	auth = require(ROOT_PATH + '/app/controllers/auth');
 
 module.exports = function(server) {
@@ -15,6 +16,12 @@ module.exports = function(server) {
     server.get('/oauth', function(req, res){
     	res.render('oauth');
     });
+
+    //Send files ending with html - ng includes for main index.html
+    server.get(/\.html$/, function(req, res, next){
+      res.render(path.join(ROOT_PATH, '/views/' + req.path),{});
+    });
+
     //TODO: if we have * then it will match all routes and will be a overhead in server
     //This should serve only index page and routes defined in angular
     server.get('*', home.index);

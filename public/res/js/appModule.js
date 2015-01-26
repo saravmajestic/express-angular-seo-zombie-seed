@@ -12,7 +12,19 @@ define([
     // Declare app level module which depends on filters, and services
 
     var app = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize']);
-    
+    app.run(['$rootScope', function($rootScope){
+        
+        //Global data for angular templates
+        $rootScope.globals = {
+            "resourceUrl" : pageConfig.resourceUrl
+        };
+
+
+        $rootScope.$on('$routeChangeStart', function(scope, next, current){
+            console.log('Changing route from '+angular.toJson(current)+' to '+angular.toJson(next));
+        });
+
+    }]);
     //Handle uncaught errors in app
     app.factory('$exceptionHandler', function() {
       return function(exception, cause) {

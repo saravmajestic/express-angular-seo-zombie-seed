@@ -55,3 +55,7 @@ TODO
 - Avoid adding logs to all folders. Currently logs are cumulatively added for lower levels. If log level is 5, all logs with levels < 4 will include logs of level 5. So it ie getting duplicated.
 - Control loading index.html for unhandled requests. Since I am using * in routes.js, if any the request is not handled, this file will be loaded. 
 - Client side caching data using http://angular-data.pseudobry.com/documentation/api/angular-cache/angular-cache
+
+References
+==
+- http://www.intridea.com/blog/2014/9/18/seo-for-single-page-applications

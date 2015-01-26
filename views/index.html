@@ -18,24 +18,29 @@
       resourceUrl : '<%= resourceUrl %>'
     }
   </script>
-  <script src="<%= resourceUrl %>res/js/lib/modernizr.js"></script>
-  <script data-main="<%= resourceUrl %>res/js/appBootstrap" src="/res/js/lib/require.js"></script>
+  <link rel="stylesheet" type="text/css" href="<%= resourceUrl %>res/css/app.css"/>
+  <script data-main="<%= resourceUrl %>res/js/appBootstrap" src="/res/js/lib.js"></script>
 </head>
 
 <body>
-  <h1>AngularJS + RequireJS</h1>
-  <ul class="menu">
-    <li><a href="/">Root</a></li>
-    <li><a href="/home">Home</a></li>
-    <li><a href="/auth">Login</a></li>
-  </ul>
+  <!-- Header -->
+  <ng-include src="'includes/header.html'"></ng-include>
+  <!-- End Header -->
 
+  <!-- Main content area -->
   <!--[if lt IE 7]>
   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-  <div>{{ welcomeMsg }}</div>
+  
+  <!-- ng view area -->
   <div ng-view></div>
+  <!-- end ng view area -->
 
+  <!-- End Main content area -->
+
+  <!-- Footer -->
+  <ng-include src="'includes/footer.html'"></ng-include>
+  <!-- End Footer -->
 
 </body>
 

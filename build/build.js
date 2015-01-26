@@ -3,7 +3,13 @@
   //baseUrl : 'test1',
   mainConfigFile: '../public/res/js/appBootstrap.js',
   dir: '../public-build',
+  keepBuildDir : true,
+  skipDirOptimize : true,
+  optimizeCss : 'standard',
   modules: [
+  {
+    name : './lib'
+  },
   //First set up the common build layer.
 {
   //module names are relative to baseUrl
