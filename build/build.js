@@ -2,10 +2,22 @@
   appDir: '../public',
   //baseUrl : 'test1',
   mainConfigFile: '../public/res/js/appBootstrap.js',
+  fileExclusionRegExp: /(.DS_Store)|(build.txt)|(.git)$/,
   dir: '../public-build',
   keepBuildDir : true,
   skipDirOptimize : true,
+  //separateCSS: true,
+  //buildCSS: false,
+  // cssBase : '../public/res/css',
   optimizeCss : 'standard',
+  map: {
+    '*': {
+      css: 'lib/require-css/css.min'
+    }
+  },
+  pragmasOnSave: {
+      excludeRequireCss: false
+  },
   modules: [
   {
     name : './lib'

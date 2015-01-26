@@ -8,7 +8,13 @@ require.config({
 				angular: 'lib/angular',
         angularRoute: 'lib/angular-route',
         angularResource: 'lib/angular-resource',
-        angularSanitize: 'lib/angular-sanitize'
+        angularSanitize: 'lib/angular-sanitize',
+        cssPath : '../css'
+    },
+    map: {
+      '*': {
+        css: 'lib/require-css/css.min'
+      }
     },
     shim: {
         'angular': {'exports': 'angular'},

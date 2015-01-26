@@ -1,6 +1,6 @@
 'use strict';
 
-define(['appModule','lib/hello.min', 'app/pages/auth/authSvc'], function (app) {
+define(['appModule','lib/hello.min', 'app/pages/auth/authSvc', 'css!./auth', 'css!cssPath/app/home'], function (app) {
 
         app.controller('authController', ['$scope', '$q', '$rootScope', '$routeParams', '$timeout', '$location', '$http','authService',
             function ($scope, $q, $rootScope, $routeParams, $timeout, $location, $http, authService) {
