@@ -4,5 +4,6 @@
     "key" : "<PEM key file name - file should be inside keys/google directory>",
     "bucket" : "<bucket name>"
   },
-  "logPath": "logs"
+  "logPath": "logs",
+  "enableZombie" : true
 }

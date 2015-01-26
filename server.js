@@ -76,11 +76,37 @@ if(ENV === "development" ){
 	});
 }
 server.use('/res', express.static(path.join(__dirname, './public-build/res')));
+//Use this middleware only if you need SEO support for the pages
+if(app_config.enableZombie){
+	server.use(function(req, res, next){
+		//If request is from bots 
+		if(req.device.type === 'bot' || (req.query && req.query['ngserver'] === 'true')){
+			//create a zombie browser with useragent as zombie
+			var Browser = require('zombie');
+			var browser = Browser.create();
+			browser.userAgent = "zombiejs";
+			//TODO: check this for prod env - ipaddress do we need this?
+			browser.visit('http://'+ipaddress+':' + port + (req.url.replace('ngserver','n')), function (err) {
+				if(err){
+					logger.error("Error in SEO: ", {stack : err.stack, message : err.message});
+					res.send(500);
+				}
+				var html = browser.html();
+				html = html.replace(/<script.*?>.*?<\/script>/gim, "")
+				res.end(html);
+			});
+		}else{
+			next();
+		}
+	});
+}
 server.use(function(req, res, next){
 	req.zombie = ((req.headers['user-agent'] == 'zombiejs') || (req.query && req.query.zombie == 'true'));
+	if(req.zombie){
+		logger.info("Zombie request: " + req.url);
+	}
 	next();
 });
-
 //Routes for all commands
 require('./routes.js')(server);
 server.use(myErrorHandler);
