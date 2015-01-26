@@ -16,7 +16,7 @@
     }
   },
   pragmasOnSave: {
-      excludeRequireCss: false
+      excludeRequireCss: true
   },
   modules: [
   {
@@ -63,7 +63,7 @@
 {
   //module names are relative to baseUrl
   name: 'app/pages/auth/authCtrl',
-  exclude: ['./appBootstrap'],
+  exclude: ['./appBootstrap', 'lib/require-css/css.min'],
   include : [
     'lib/hello.min',
     'app/pages/auth/authCtrl'
