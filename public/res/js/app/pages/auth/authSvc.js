@@ -1,8 +1,8 @@
 'use strict';
 
-define(['appModule', 'common/ajax'], function (app) {
+define(['serviceModule', 'common/ajax'], function (services) {
 
-        app.service('authService', ['$http', '$q', '$rootScope', 'ajaxService',
+        services.service('authService', ['$http', '$q', '$rootScope', 'ajaxService',
             function ($http, $q, $rootScope, ajaxService) {
                 this.doSignup = function(params){
                     return ajaxService.triggerAjax('api/signup', params, true, null);
@@ -12,8 +12,8 @@ define(['appModule', 'common/ajax'], function (app) {
                     return ajaxService.triggerAjax('api/login', params, true, null);
                 };
 
-                this.getMe = function(params){
-                    return ajaxService.triggerAjax('api/me', params, false, null);
+                this.getMe = function(){
+                    return ajaxService.triggerAjax('api/me', {}, false, null);
                 };
 
                 this.doLogout = function(params){

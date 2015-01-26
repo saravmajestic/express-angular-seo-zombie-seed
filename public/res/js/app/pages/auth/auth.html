@@ -1,11 +1,7 @@
 <link rel="stylesheet" type="text/css" ng-href="{{globals.resourceUrl}}res/css/app/login.css"/>
 <section ng-controller="authController">
-    <h1>This is Login Page</h1>
-    <p>{{ welcomeMessage }}</p>
-    <p ng-if="user != null">
-    	Welcome {{user.first_name}}
-    	<span>We found your email Id! {{user.email}}</span>
-    </p>
+    <div style="width:50%;display:inline-block;">
+    <h2>Signup</h2>
     <form ng-submit="doSignup();" name="signup" id="signup">
     	<div>
     		<input type="text" name="firstname" ng-model="signupData.first_name" placeholder="First name"/>
@@ -20,6 +16,10 @@
     		<input type="submit" name="submit" value="submit"/>
     	</div>
     </form>
+    </div>
+
+    <div style="width:49%;display:inline-block;">
+    <h2>Login</h2>
     <form ng-submit="dologin();" name="login" id="login">
     	<div>
     		<input type="email" name="email" ng-model="loginData.email" placeholder="email address"/>
@@ -31,6 +31,10 @@
     		<input type="submit" name="submit" value="Login"/>
     	</div>
     </form>
+    </div>
+    <br/>
+    <br/>
+    <h3>Or Login using</h3>
     <a href="javascript:;" ng-click="doSocialLogin('facebook', 'F')">Facebook</a><br/> 
     <a href="javascript:;" ng-click="doSocialLogin('google', 'G')">Google</a><br/>
     <a href="javascript:;" ng-click="doSocialLogin('linkedin', 'L')">LinkedIn</a><br/>

@@ -24,8 +24,7 @@
     'routeResolve',
     'appRoutes',
     'appModule',
-    'common/ajax',
-    'app/pages/auth/authSvc'
+    'common/ajax'
   ]
 },
 

@@ -1,5 +1,5 @@
 'use strict';
-define(['appModule'], function(app) {
+define(['serviceModule'], function(services) {
     var convertAjaxParams = function(obj) {
         var query = '',
             name, value, fullSubName, subName, subValue, innerObj, i;
@@ -25,7 +25,7 @@ define(['appModule'], function(app) {
         }
         return query.length ? query.substr(0, query.length - 1) : query;
     };
-    app.service('ajaxService', ['$q','$http', '$rootScope', '$window', function($q, $http, $rootScope, $window){
+    services.service('ajaxService', ['$q','$http', '$rootScope', '$window', function($q, $http, $rootScope, $window){
 
     this.triggerAjax = function(url, query, isPost, cache) {
         var deferred = $q.defer(),

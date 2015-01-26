@@ -6,25 +6,32 @@ define([
     'angular',
     'angularRoute',
     'angularResource',
-    'angularSanitize'
+    'angularSanitize',
+    'controllerModule',
+    'serviceModule',
+    'app/pages/header/rootCtrl'
     ], function (appRoutes, routeResolve, angularRoute, angularResource, angularSanitize) {
 
     // Declare app level module which depends on filters, and services
 
-    var app = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize']);
+    var app = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'app.controllers', 'app.services']);
     app.run(['$rootScope', function($rootScope){
         
         //Global data for angular templates
         $rootScope.globals = {
-            "resourceUrl" : pageConfig.resourceUrl
+            "resourceUrl" : pageConfig.resourceUrl,
+            "user" : null
         };
 
 
         $rootScope.$on('$routeChangeStart', function(scope, next, current){
             console.log('Changing route from '+angular.toJson(current)+' to '+angular.toJson(next));
         });
-
+        $rootScope.$on('$locationChangeStart', function(scope, next, current){
+            console.log('Changing location from '+(current)+' to '+(next));
+        });
     }]);
+    
     //Handle uncaught errors in app
     app.factory('$exceptionHandler', function() {
       return function(exception, cause) {

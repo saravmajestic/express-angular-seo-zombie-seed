@@ -24,8 +24,9 @@ define(['appModule','lib/hello.min', 'app/pages/auth/authSvc'], function (app) {
                     	password : ""
                     };
                     $scope.dologin = function(){
-						authService.doLogin($scope.loginData).then(function(resp){
-                    		console.log(resp);
+					authService.doLogin($scope.loginData).then(function(resp){
+                    		$rootScope.$broadcast('user_login',{data : resp.user});
+                              $timeout(function(){$location.url('/');},200);
                     	}, function(err){
                     		console.log(err);
                     	});

@@ -1,6 +1,11 @@
+<header ng-controller="rootController" ng-init="onAppLoad();">
 <h1>AngularJS + RequireJS</h1>
+	<div ng-if="globals.user !=null">
+		Welcome {{globals.user.first_name}} <a href="javascript:;" ng-click="logout();">Logout</a>
+	</div>
   <ul class="menu">
     <li><a href="/">Root</a></li>
     <li><a href="/home">Home</a></li>
-    <li><a href="/auth">Login</a></li>
+    <li ng-if="globals.user == null"><a href="/auth">Login</a></li>
   </ul>
+</header>

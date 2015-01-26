@@ -78,6 +78,10 @@ gulp.task('build', function(){
 
 });
 
+gulp.task('server', shell.task([
+  'supervisor --debug server'
+]))
+
 // Watch Task
 // Watches JS
 gulp.task('watch', function () {
@@ -88,4 +92,4 @@ gulp.task('watch', function () {
   //gulp.watch('public/res/js/**/*.html', ['build']);
 });
 // gulp.task('default', ['uploadJS', 'uploadCSS']);
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', ['build', 'server', 'watch']);

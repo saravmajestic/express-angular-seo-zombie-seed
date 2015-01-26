@@ -10,7 +10,7 @@ define([], function() {
             },
             '/': {
                 templateUrl: '/res/js/app/pages/home/in.html',
-                dependencies: [ 'app/rootCtrl' ]
+                dependencies: []
             },
             '/auth': {
                 templateUrl: '/res/js/app/pages/auth/auth.html',
