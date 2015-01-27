@@ -34,11 +34,14 @@ What is included in this project
 - MongoDB with mongoose layer. Just update database.json with connection string
 - Single page application (SPA) with angularJS, requireJS
 - Production deployment configuration and tasks for static resources using gulp task and r.js optimizer
+- require-css implementation - (https://github.com/guybedford/require-css). On demand CSS loading for require JS projects 
 - CDN support (Google Cloud storage - GCS)
 - Gulp task to upload static resources to CDN (GCS)
 - Handling SEO implementation using ZombieJS. All the pages will be generated regularly and it will be served only for bots
 - Session handling using MongoStore
 - Regular login/signup with social Logins. I used hello.js for accomplishing this
+- global variables for templates
+- jsonp call support in server side
 
 Steps to install
 ---

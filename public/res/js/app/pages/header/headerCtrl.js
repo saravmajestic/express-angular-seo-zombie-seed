@@ -2,7 +2,7 @@
 
 define(['controllerModule', 'app/pages/auth/authSvc'], function (controllers) {
 
-        controllers.controller('rootController', ['$scope', '$q', '$rootScope', '$routeParams', '$timeout', '$location', '$http','authService',
+        controllers.controller('headerController', ['$scope', '$q', '$rootScope', '$routeParams', '$timeout', '$location', '$http','authService',
             function ($scope, $q, $rootScope, $routeParams, $timeout, $location, $http, authService) {
             	$rootScope.$on('user_login', function(e, data){
             		$scope.getMe();

@@ -9,7 +9,7 @@ define([
     'angularSanitize',
     'controllerModule',
     'serviceModule',
-    'app/pages/header/rootCtrl'
+    'app/pages/header/headerCtrl'
     ], function (appRoutes, routeResolve, angularRoute, angularResource, angularSanitize) {
 
     // Declare app level module which depends on filters, and services

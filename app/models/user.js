@@ -50,7 +50,7 @@ UserSchema.statics.verifyPassword = function (password, user) {
 UserSchema.statics.login = function(email, password, callback) {
 	var User = mongoose.model('User');
 	
-	this.findOne({ email:new RegExp(["^",email,"$"].join(""),"i")}, {password : 1, email : 1}, function (err, user) {
+	this.findOne({ email: { $regex: email, $options: 'i'}}, {password : 1, email : 1}, function (err, user) {
 		if (err) callback(err, null);
 		if(user) {
 

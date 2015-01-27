@@ -22,12 +22,20 @@ module.exports = Database = {
 		});
 	    mongoose.connection.on('error', function(err) {
 		    logger.error('We have error while connecting to mongodb', err);
+		    console.error('We have error while connecting to mongodb', err);
 		});
 	    if(config_db.debug){
 		    mongoose.set('debug', function(collectionName, method, query, doc){
 		    	logger.dbquery( "DB: ", collectionName, method, JSON.stringify(query));
 		    	});
 	    }
+	    // If the Node process ends, close the Mongoose connection
+		process.on('SIGINT', function() {
+		  mongoose.connection.close(function () {
+		    logger.dbquery('Mongoose default connection disconnected through app termination');
+		    process.exit(0);
+		  });
+		});
 	},
 	// disconnect from database
 	closeDB: function() {

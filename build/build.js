@@ -4,7 +4,7 @@
   mainConfigFile: '../public/res/js/appBootstrap.js',
   fileExclusionRegExp: /(.DS_Store)|(build.txt)|(.git)$/,
   dir: '../public-build',
-  keepBuildDir : true,
+  keepBuildDir : false,
   skipDirOptimize : true,
   //separateCSS: true,
   //buildCSS: false,
@@ -54,9 +54,9 @@
 {
   //module names are relative to baseUrl/paths config
   name: 'app/pages/home/homeCtrl',
-  exclude: ['./appBootstrap'],
+  exclude: ['./appBootstrap', 'lib/require-css/css.min'],
   include : [
-  'app/pages/home/homeCtrl'
+  
   ]
 },
 
@@ -65,8 +65,7 @@
   name: 'app/pages/auth/authCtrl',
   exclude: ['./appBootstrap', 'lib/require-css/css.min'],
   include : [
-    'lib/hello.min',
-    'app/pages/auth/authCtrl'
+    
   ]
 }
 
