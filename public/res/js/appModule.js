@@ -16,22 +16,37 @@ define([
 
     var app = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'app.controllers', 'app.services']);
     app.run(['$rootScope', function($rootScope){
-        
+
         //Global data for angular templates
         $rootScope.globals = {
             "resourceUrl" : pageConfig.resourceUrl,
             "user" : null
         };
 
+        //Method to update page meta
+        $rootScope.page = {
+          setMeta: function(meta) {
+            var rootMeta = $rootScope.meta;
+            if(rootMeta && meta){
+              angular.extend(rootMeta, meta);
+            }else{
+              rootMeta = meta;
+            }
+
+            $rootScope.meta = rootMeta;
+          }
+        }
 
         $rootScope.$on('$routeChangeStart', function(scope, next, current){
             console.log('Changing route from '+angular.toJson(current)+' to '+angular.toJson(next));
+            console.log(next.$$route.meta);
+            $rootScope.page.setMeta(next.$$route.meta);
         });
         $rootScope.$on('$locationChangeStart', function(scope, next, current){
             console.log('Changing location from '+(current)+' to '+(next));
         });
     }]);
-    
+
     //Handle uncaught errors in app
     app.factory('$exceptionHandler', function() {
       return function(exception, cause) {
@@ -59,7 +74,8 @@ define([
                     angular.forEach(appRoutes.routes, function(route, path) {
                         $routeProvider.when(path, {
                             "templateUrl": route.templateUrl,
-                            "resolve": routeResolve.load(route.dependencies)
+                            "resolve": routeResolve.load(route.dependencies),
+                            "meta" : route.meta
                         });
                     });
                 }

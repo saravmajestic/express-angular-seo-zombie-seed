@@ -9,9 +9,10 @@
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <title>Angular-RequireJS Project</title>
+  <title  ng-bind="'myApp | ' + meta.title">Angular-RequireJS Project</title>
   <link rel="shortcut icon" type="image/x-icon" href="<%= resourceUrl %>res/favicon.ico">
-  <meta name="description" content=""/>
+  <meta name="description" content="{{meta.description}}"/>
+  <meta content="{{meta.keywords}}" name="keywords">
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <script>
     var pageConfig = {
