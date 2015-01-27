@@ -47,7 +47,7 @@ Steps to install
 ---
 - clone the git repo
 - ```npm install```
-- Run gulp task ```./node_modules/gulp/bin/gulp.js``` This will build all necessary resources mentioned as in ```build/build.js``` and add it to 'public-build' directory. This will also have livereload enabled.
+- Run gulp task ```./node_modules/gulp/bin/gulp.js``` This will build all necessary resources mentioned as in ```build/build.js``` and add it to 'dist' directory. This will also have livereload enabled.
 - Run ```node server.js```
 - Open the page with ip address and port mentioned in the console
 - For checking SEO page(angular rendered from server side), open ```http://<ip address>:<port>/api/snapshot```. This will render html content of your root (/) page

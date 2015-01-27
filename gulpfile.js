@@ -39,14 +39,14 @@ var uploadFn = function (dirPath) {
     var async = require('async');
     var version = "0.1";
 
-    var files = fs.readdirSync(__dirname + '/public-build/' + dirPath);
+    var files = fs.readdirSync(__dirname + '/dist/' + dirPath);
     async.eachSeries(files, function(file, callback){
-      console.log("Uploading file: " + (__dirname + '/public-build/'+dirPath+'/' + file));
-      storage.copy(__dirname + '/public-build/'+dirPath+'/' + file, 'gs://'+app_config.google.bucket+'/'+version+'/'+dirPath+'/'+ file, options, function(err, url) {
+      console.log("Uploading file: " + (__dirname + '/dist/'+dirPath+'/' + file));
+      storage.copy(__dirname + '/dist/'+dirPath+'/' + file, 'gs://'+app_config.google.bucket+'/'+version+'/'+dirPath+'/'+ file, options, function(err, url) {
         if(err)
           console.log(err);
         else
-          console.log("Upload completed: " + (__dirname + '/public-build/'+dirPath+'/' + file));
+          console.log("Upload completed: " + (__dirname + '/dist/'+dirPath+'/' + file));
         callback();
       });
     }, function(err){

@@ -3,7 +3,7 @@
   //baseUrl : 'test1',
   mainConfigFile: '../public/res/js/appBootstrap.js',
   fileExclusionRegExp: /(.DS_Store)|(build.txt)|(.git)$/,
-  dir: '../public-build',
+  dir: '../dist',
   keepBuildDir : false,
   skipDirOptimize : true,
   //separateCSS: true,
@@ -20,7 +20,13 @@
   },
   modules: [
   {
-    name : './lib'
+    name : './lib',
+    create : true,
+    include : [
+    'lib/modernizr',
+    'lib/require',
+    'lib/require-css/css.min'
+    ]
   },
   //First set up the common build layer.
 {
@@ -30,7 +36,7 @@
   //top level dependencies, "include" will find
   //nested dependencies.
   exclude : [
-    
+
   ],
   include: [
     'routeResolve',
