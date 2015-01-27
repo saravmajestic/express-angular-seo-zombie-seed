@@ -40,7 +40,7 @@ server.use(session({
     secret: 'C63f#057',
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
-morgan.token('sessionId', 
+morgan.token('sessionId',
 		function (req, res) {
 		    if (!req.session) return '~'; // should never happen
 		    if (req.session.user) {
@@ -75,11 +75,11 @@ if(ENV === "development" ){
 		next();
 	});
 }
-server.use('/res', express.static(path.join(__dirname, './public-build/res')));
+server.use('/res', express.static(path.join(__dirname, './dist/res')));
 //Use this middleware only if you need SEO support for the pages
 if(app_config.enableZombie){
 	server.use(function(req, res, next){
-		//If request is from bots 
+		//If request is from bots
 		if(req.device.type === 'bot' || (req.query && req.query['ngserver'] === 'true')){
 			//create a zombie browser with useragent as zombie
 			var Browser = require('zombie');
