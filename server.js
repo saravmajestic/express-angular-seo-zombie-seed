@@ -36,8 +36,8 @@ server.engine('.html', require('ejs').__express);
 server.use(session({
 	resave : false,
 	saveUninitialized : false,
-	name : 'ch.sess.id',
-    secret: 'C63f#057',
+	name : 'ng.sess.id',
+    secret: 'secret',
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 morgan.token('sessionId',
