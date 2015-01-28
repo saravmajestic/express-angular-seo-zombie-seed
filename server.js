@@ -2,6 +2,11 @@ global.ROOT_PATH = __dirname;
 global.ENV = process.env.ENV || "development";
 exports = port = (process.env.PORT || 8080);
 
+process.on('uncaughtException', function(err) {
+	console.log('uncaughtException caught the error', err.message, err.stack);
+	logger.error('uncaughtException caught the error', err.message, err.stack);
+});
+
 /**
  * Module dependencies.
  */

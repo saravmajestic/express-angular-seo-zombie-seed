@@ -63,10 +63,12 @@ define(['appModule','lib/hello.min', 'app/pages/auth/authSvc', 'css!./auth', 'cs
 							hello(network).api( '/me' ).then( function(me){
 								console.log(me);
 								$scope.$apply(function(){
-									angular.extend($scope.signupData, me);
-                                             $scope.signupData.uid = $scope.signupData.id;
+                  for(prop in $scope.signupData){
+                    $scope.signupData[prop] = me[prop];
+                  }
+                                             $scope.signupData.uid = me.id;
                                              $scope.signupData.provider = provider;
-                                             $scope.doSignup(); 
+                                             $scope.doSignup();
 								});
 							});
                     	});

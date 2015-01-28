@@ -85,7 +85,10 @@ UserSchema.statics.signup = function(data, callback) {
 	var User = mongoose.model('User');
 	var user = new User();
 
-	data.password = User.sign(data.password, 'md5');
+  //For social signups, we will not have password
+  if(data.password){
+    data.password = User.sign(data.password, 'md5');
+  }
 	//TODO: verify whether "pre" is getting called when saving this document after updating to mongoose 3.9.8
 	/*User.findOneAndUpdate({'email' : params.email}, {$set : params}, {upsert : true, new : true}, function(err, user){
 		

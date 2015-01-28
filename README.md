@@ -63,3 +63,10 @@ TODO
 References
 ==
 - http://www.intridea.com/blog/2014/9/18/seo-for-single-page-applications
+
+How to add new page
+==
+- add new directory inside ```public/res/app/pages``` ex: menu
+- add controller, service, css, template files as needed inside this directory
+- Create a new route in ```appRoutes.js```
+- Add a module inside ```build/build.js```
