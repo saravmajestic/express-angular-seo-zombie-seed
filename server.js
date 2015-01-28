@@ -114,11 +114,9 @@ server.use(myErrorHandler);
 server.set('jsonp callback name', 'callback');
 
 exports = ipaddress = getIPAddress();
-if(app_config.resourceUrl){
-	server.locals.resourceUrl = app_config.resourceUrl;
-}else{
-	server.locals.resourceUrl = "http://" + ipaddress + ":" + port + "/";
-}
+
+server.locals.resourceUrl = app_config.resourceUrl || "http://" + ipaddress + ":" + port + "/";
+
 server.listen(port, ipaddress, function() {
 	console.log('%s: Node server started on %s:%d ...', Date(Date.now()), ipaddress, port);
 });

@@ -2,8 +2,8 @@
 
 define(['appModule','lib/hello.min', 'app/pages/auth/authSvc', 'css!./auth', 'css!cssPath/app/home'], function (app) {
 
-        app.controller('authController', ['$scope', '$q', '$rootScope', '$routeParams', '$timeout', '$location', '$http','authService',
-            function ($scope, $q, $rootScope, $routeParams, $timeout, $location, $http, authService) {
+        app.controller('authController', ['$scope', '$q', '$rootScope', 'config', '$routeParams', '$timeout', '$location', '$http','authService',
+            function ($scope, $q, $rootScope, config, $routeParams, $timeout, $location, $http, authService) {
                     $scope.welcomeMessage = 'Welcome to Login page!!!';
 
                     $scope.user = null;
@@ -41,11 +41,11 @@ define(['appModule','lib/hello.min', 'app/pages/auth/authSvc', 'css!./auth', 'cs
 
                     $scope.onLoginPageLoad = function(){
                     	hello.init({ 
-							facebook : 287778054690335,
-							linkedin  : "",
-							google   : ""
+							facebook : config.social.facebook,
+							linkedin  : config.social.linkedin,
+							google   : config.social.google
 						},{
-							redirect_uri:'http://192.168.1.36:8080/oauth',
+							redirect_uri: $rootScope.globals.ctxUrl + 'oauth',
 							scope : ['friends', 'email']
 						});
 					}

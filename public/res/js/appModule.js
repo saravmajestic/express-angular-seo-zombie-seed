@@ -2,6 +2,7 @@
 
 define([
     'appRoutes',
+    'appConfig',
     'routeResolve',
     'angular',
     'angularRoute',
@@ -10,16 +11,19 @@ define([
     'controllerModule',
     'serviceModule',
     'app/pages/header/headerCtrl'
-    ], function (appRoutes, routeResolve, angularRoute, angularResource, angularSanitize) {
+    ], function (appRoutes, appConfig, routeResolve, angularRoute, angularResource, angularSanitize) {
 
     // Declare app level module which depends on filters, and services
 
     var app = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'app.controllers', 'app.services']);
-    app.run(['$rootScope', function($rootScope){
-
+    app.run(['$rootScope', '$location', function($rootScope, $location){
         //Global data for angular templates
+        var port = $location.port();
+        var ctxUrl = $location.protocol() + '://' + $location.host()  + ( port && (port == 80 || port == 443) ? '' : ':'+port ) + "/";
+        
         $rootScope.globals = {
             "resourceUrl" : pageConfig.resourceUrl,
+            'ctxUrl' : ctxUrl,
             "user" : null
         };
 
@@ -46,7 +50,9 @@ define([
             console.log('Changing location from '+(current)+' to '+(next));
         });
     }]);
-
+    
+    app.value('config', appConfig);
+        
     //Handle uncaught errors in app
     app.factory('$exceptionHandler', function() {
       return function(exception, cause) {

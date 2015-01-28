@@ -91,7 +91,7 @@ UserSchema.statics.signup = function(data, callback) {
 		
 	});*/
 
-    User.findOne({email:new RegExp(["^",data.email,"$"].join(""),"i")}, function(err, user) {
+    User.findOne({email:{ $regex: data.email, $options: 'i'}}, function(err, user) {
         if(err){
             callback(err);
         }else

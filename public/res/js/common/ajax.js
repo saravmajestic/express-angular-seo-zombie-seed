@@ -53,7 +53,7 @@ define(['serviceModule'], function(services) {
             deferred.reject(err);
         };
         
-        var ctx = "";
+        var ctx = $rootScope.globals.ctxUrl;
         if (isPost) {
             $http({
                 method: 'POST',
