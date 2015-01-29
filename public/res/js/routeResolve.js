@@ -2,15 +2,28 @@
 
 define([], function() {
     return {
-        load: function (dependencies) {
+        load: function (dependencies, authCheckNeeded) {
             var definition = {
-                resolver:['$q', '$rootScope', function($q, $rootScope){
+                resolver:['$q', '$rootScope', '$location', 'authService', function($q, $rootScope, $location, authService){
                     var deferred = $q.defer();
                     var modules = dependencies;
                     require(modules, function(){
-                        $rootScope.$apply(function(){
-                           deferred.resolve();
-                        });
+                        //If this route needs authentication, validate user login
+                        if(authCheckNeeded){
+                            if(authService.userIsAuthenticated()){
+                                $rootScope.$apply(function(){
+                                   deferred.resolve();
+                                });
+                            }else{
+                                deferred.reject();
+                                $location.path('/auth');
+                            }
+                        }else{
+                            //If not, resolve the route
+                            $rootScope.$apply(function(){
+                               deferred.resolve();
+                            });
+                        }
                     });
                     return deferred.promise;
                 }]

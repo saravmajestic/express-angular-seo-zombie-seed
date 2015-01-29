@@ -4,6 +4,9 @@ define(['serviceModule', 'common/ajax'], function (services) {
 
         services.service('authService', ['$http', '$q', '$rootScope', 'ajaxService',
             function ($http, $q, $rootScope, ajaxService) {
+                this.userIsAuthenticated = function(){
+                    return $rootScope.globals.user != null;
+                };
                 this.doSignup = function(params){
                     return ajaxService.triggerAjax('api/signup', params, true, null);
                 };

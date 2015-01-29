@@ -82,7 +82,7 @@ define([
                     angular.forEach(appRoutes.routes, function(route, path) {
                         $routeProvider.when(path, {
                             "templateUrl": route.templateUrl,
-                            "resolve": routeResolve.load(route.dependencies),
+                            "resolve": routeResolve.load(route.dependencies, route.authCheck),
                             "meta" : route.meta
                         });
                     });
