@@ -70,16 +70,16 @@ gulp.task('uploadCSS', function(){
 // Build resources - JS and CSS
 var shell = require('gulp-shell');
 gulp.task('build', function(){
-  gulp.src('public/')
+  var stream = gulp.src('public/')
   .pipe(shell([
     'node build/r.js -o build/build.js optimize=none'
     ]))
     .pipe(livereload());
-
+	return stream;
 });
-
-gulp.task('server', shell.task([
-  'supervisor --debug server'
+//Run server after running the build - to make it serial
+gulp.task('server', ['build'], shell.task([
+  'node --debug server'
 ]))
 
 // Watch Task

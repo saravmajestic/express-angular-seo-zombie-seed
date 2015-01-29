@@ -132,7 +132,7 @@ function myErrorHandler(err, req, res, next) {
 	if(ENV !== "production"){
 		extra = {stack : err.stack, message : err.message};
 	}
-	res.json({"isSuccess" : false, err : "Internal error happened!", extra : extra});
+	res.json({"isSuccess" : false, errMsg : "Internal error happened!", extra : extra});
 }
 
 function getIPAddress() {
