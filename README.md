@@ -1,22 +1,22 @@
 # express-angular-seo-zombie-seed
 NodeJS express project with angular and using zombie for SEO
 
-Tech Stack
-======
+##Tech Stack##
+
 - NodeJS with Express JS
 - MongoDB with Mongoose layer
 - Google cloud storage for CDN
 
-Frameworks
-=========
+##Frameworks##
+
 - Express JS (4.11.0)
 - AngularJS (1.3.8) with requireJS
 - [Zombie](https://github.com/assaf/zombie "Zombie") for generating pages for SEO
 - [hello.js](http://adodson.com/hello.js/ "hello.js") (for social login)
 - Gulp for task management
 
-Basic requirements for a site
-===
+##Basic requirements for a site##
+
 - Miniumum number of http requests
 - Single Page application in client side
 - Since we are using AngularJS for single page application, SEO has to be handled
@@ -25,8 +25,8 @@ Basic requirements for a site
 - Configs for different environment
 - Social Logins with regular signup/login
 
-What is included in this project
-==
+##What is included in this project##
+
 - Server with nodeJS and expressjs framework. File: `server.js`
 - MongoDB integration with Mongoose layer. File: `app/utils/database.js`
 - Single Page application starter kit using **AngularJS, RequireJS**. File: `public/res/js/appModule.js` and `public/res/js/appBootstrap.js`
@@ -43,8 +43,8 @@ What is included in this project
 - **Session handling ** using MongoStore. File: `server.js`
 - **Global variables** for client side templates like CDN url prefix for images, etc.. File: `public/res/js/appModule.js` and look for `$rootScope.globals`
 
-Steps to install
----
+##Steps to install##
+
 - clone or download or fork this git repo
 - Run ```npm install``` to install dependencies
 - Run gulp task ```./node_modules/gulp/bin/gulp.js``` This will build all necessary resources mentioned as in ```build/build.js``` and add it to `dist` directory. This will also have [livereload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) enabled.
@@ -53,20 +53,20 @@ Steps to install
 - For checking SEO page(angularJS page rendered from server side), add ```ngserver=true``` to the page URL. ex: `http://<ipaddress>:<port>/?ngserver=true`. This will render html content of your root (/) page
 
 
-How to add new page
-==
+##How to add new page##
+
 - add new directory inside ```public/res/app/pages``` ex: `settings`
 - add controller, service, css, template files as needed inside this directory
 - Add the new route in ```appRoutes.js```, ex: `/settings`
 - Add the new module inside ```build/build.js```
 
-Production Deployment
-====
+###Production Deployment###
+
 - In `gulpfile.js` we hav added `optimizer=none` in the task `build`. This will not minify the files when running the build for easy debugging during development. Remove this `optimizer=none` while doing production deployment to minify the files
 - If you want to upload files to CDN, here I used Google Cloud storage, uncomment `gulp.task('default', ['uploadJS', 'uploadCSS']);` in `gulpfile.js`. Make sure you add necessary keys and bucket names in `app.json` configs. Running this task will upload CSS and JS files to the CDN bucket
 
-Coming soon
-====
+###Coming soon###
+
 - load combined view files instead of separate partials for each page
 - Avoid adding logs to all folders. Currently logs are cumulatively added for lower levels. If log level is 5, all logs with levels < 4 will include logs of level 5. So it ie getting duplicated.
 - Control loading index.html for unhandled requests. Since I am using `*` in `routes.js`, if any the request is not handled, `index.html` will be loaded.
