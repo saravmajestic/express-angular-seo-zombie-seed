@@ -80,6 +80,7 @@ gulp.task('build', function(){
 //Run server after running the build - to make it serial
 gulp.task('server', ['build'], shell.task([
   'node --debug server'
+  //'supervisor -i "public,dist,views" --debug server'
 ]))
 
 // Watch Task

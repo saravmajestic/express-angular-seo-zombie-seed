@@ -48,7 +48,7 @@ NodeJS + ExpressJS + MongoDB + Angular (MEAN stack) with requireJS and using zom
 - clone or download or fork this git repo
 - Run ```npm install``` to install dependencies
 - Run gulp task ```./node_modules/gulp/bin/gulp.js``` This will build all necessary resources mentioned as in ```build/build.js``` and add it to `dist` directory. 
-- The above gulp task will also start the server and display the IP address and port in which it is started.
+- The above gulp task will also start the server through this command: `node --debug server` and display the IP address and port in which it is started. Optionally, you can use `supervisor` by uncommenting `supervisor -i "public,dist,views" --debug server` and commenting `node --debug server` in `server` task
 - The above task will also listen for changes inside `public` folder and re builds the resources whenever there is a change. [livereload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) is enabled along with this task.
 - For checking SEO page(angularJS page rendered from server side), add ```ngserver=true``` to the page URL. ex: `http://<ipaddress>:<port>/?ngserver=true`. This will render html content of your root (/) page
 
