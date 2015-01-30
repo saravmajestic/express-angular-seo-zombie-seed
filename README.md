@@ -1,5 +1,5 @@
 # express-angular-seo-zombie-seed
-NodeJS express project with angular and using zombie for SEO
+NodeJS + ExpressJS + MongoDB + Angular (MEAN stack) with requireJS and using zombie for SEO
 
 ##Tech Stack##
 
