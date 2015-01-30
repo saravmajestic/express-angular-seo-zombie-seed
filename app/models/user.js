@@ -1,7 +1,7 @@
 var Validator 	= require('validator').Validator, utils 	= require('../utils/utils'),
     crypto 		= require('crypto');
 
-var exports = module.exports = UserSchema = new mongoose.Schema({});
+var exports = module.exports = UserSchema = new mongoose.Schema({},{collection : 'user'});
 
 UserSchema.add({
     uid: 		{type: String, default : '', index: true, unique : true },
