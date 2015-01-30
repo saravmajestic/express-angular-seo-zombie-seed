@@ -1,9 +1,7 @@
-@import url('help.css');
-
-.homeCss{
+.helpCss{
 	font-weight:600;
 	border:1px solid #ddd;
-	background-color: green;
+	background-color: red;
 	color:#fff;
 	padding:5px;
 }

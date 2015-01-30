@@ -10,7 +10,10 @@
   <base href="/"/>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <title  ng-bind="'myApp | ' + meta.title">Angular-RequireJS Project</title>
+  <title  ng-bind="meta.title">Complete AngularJS + RequireJS SPA Seed Project</title>
+  
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
+
   <link rel="shortcut icon" type="image/x-icon" href="<%= resourceUrl %>res/favicon.ico">
   <meta name="description" content="{{meta.description}}"/>
   <meta content="{{meta.keywords}}" name="keywords">
@@ -35,7 +38,9 @@
   <![endif]-->
   
   <!-- ng view area -->
-  <div ng-view></div>
+  <div class="mainContent">
+    <div ng-view></div>
+  </div>
   <!-- end ng view area -->
 
   <!-- End Main content area -->

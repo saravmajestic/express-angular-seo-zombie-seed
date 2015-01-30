@@ -15,6 +15,7 @@ define([], function() {
                                    deferred.resolve();
                                 });
                             }else{
+                                alert("You should be logged in to view this page. Redirecting to login now!");
                                 deferred.reject();
                                 $location.path('/auth');
                             }

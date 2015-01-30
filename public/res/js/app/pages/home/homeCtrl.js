@@ -1,6 +1,6 @@
 'use strict';
 
-define(['appModule'], function (app) {
+define(['appModule', 'css!cssPath/app/home'], function (app) {
 
         app.controller('homeController', ['$scope', '$q', '$rootScope', '$routeParams', '$location', '$http',
             function ($scope, $q, $rootScope, $routeParams, $location, $http) {

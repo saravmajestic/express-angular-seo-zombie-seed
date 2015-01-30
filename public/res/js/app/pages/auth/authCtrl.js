@@ -1,6 +1,6 @@
 'use strict';
 
-define(['appModule','lib/hello.min', 'app/pages/auth/authSvc', 'css!./auth', 'css!cssPath/app/home'], function (app) {
+define(['appModule','lib/hello.min', 'app/pages/auth/authSvc', 'css!./auth'], function (app) {
 
         app.controller('authController', ['$scope', '$q', '$rootScope', 'config', '$routeParams', '$timeout', '$location', '$http','authService',
             function ($scope, $q, $rootScope, config, $routeParams, $timeout, $location, $http, authService) {
@@ -25,17 +25,20 @@ define(['appModule','lib/hello.min', 'app/pages/auth/authSvc', 'css!./auth', 'cs
                     };
                     $scope.dologin = function(){
 					authService.doLogin($scope.loginData).then(function(resp){
-                    		$rootScope.$broadcast('user_login',{data : resp.user});
-                              $timeout(function(){$location.url('/');},200);
+                    		$scope.afterAuth(resp);
                     	}, function(err){
-                    		console.log(err);
+                    		alert(err.errMsg);
                     	});
+                    };
+                    $scope.afterAuth = function(resp){
+                      $rootScope.$broadcast('user_login',{data : resp.user});
+                              $timeout(function(){$location.url('/');},200);
                     };
                     $scope.doSignup = function(){
                     	authService.doSignup($scope.signupData).then(function(resp){
-                    		console.log(resp);
+                    		$scope.afterAuth(resp);
                     	}, function(err){
-                    		console.log(err);
+                    		alert(err.errMsg);
                     	});
                     };
 

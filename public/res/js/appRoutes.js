@@ -14,10 +14,10 @@ define([], function() {
                 }
             },
             '/': {
-                templateUrl: '/res/js/app/pages/home/in.html',
-                dependencies: [],
+                templateUrl: '/res/js/app/pages/root/root.html',
+                dependencies: ['app/pages/root/rootCtrl'],
                 meta : {
-                  title : 'Angular SEO Seed project',
+                  title : 'Complete AngularJS + RequireJS SPA Seed Project',
                   description : "Description for root page",
                   keywords : "keywords for root page"
                 }
@@ -30,6 +30,16 @@ define([], function() {
                   description : "Description for login page",
                   keywords : "keywords for login page"
                 }
+            },
+            '/profile/edit': {
+                templateUrl: '/res/js/app/pages/profile/editProfile.html',
+                dependencies: [ 'app/pages/profile/profileCtrl' ],
+                meta : {
+                  title : 'Edit Profile Page',
+                  description : "Description for Edit Profile page",
+                  keywords : "keywords for Edit Profile page"
+                },
+                authCheck : true
             }
         }
     };

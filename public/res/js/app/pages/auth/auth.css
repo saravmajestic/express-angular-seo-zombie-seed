@@ -1,4 +1,6 @@
-@import url(./test.css);
-body{
-	background-color: yellow;
+.formBox{
+	width:49%;display:inline-block;vertical-align: top;
+}
+.formBox div{
+	margin-bottom: 10px;
 }

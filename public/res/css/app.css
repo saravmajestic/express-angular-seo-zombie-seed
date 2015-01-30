@@ -1,35 +1,32 @@
-@import url('lib/lib.css');
+@import url('lib/normalize.css');
+
+body{
+    font-family: 'Open Sans', sans-serif;
+    margin:0 50px;
+}
 
 .ng-cloak {
     display: none;
 }
+h1{
+    border-bottom: 1px solid #ddd;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+.menu{
+    padding: 0;
+}
+.menu li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 5px;
+}
+.menu li a{
 
-.city img {
-    width: 100%;
 }
-.city {
-    margin-bottom: 2em;
+.mainContent{
+    padding-bottom:40px;
 }
-.city a {
-    color: inherit ! important;
-    display: block;
-}
-.city .cityname {
-    font-size: 1.5em;
-}
-
-.cityweather {
-    border-top: rgba(86,61,124,.15) solid 1px;
-    border-bottom: rgba(86,61,124,.15) solid 1px;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    margin-bottom: 1em;
-    margin-top: 1em;
-}
-
-.weathersymbol {
-    height: 300px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center right;
+footer{
+    
 }

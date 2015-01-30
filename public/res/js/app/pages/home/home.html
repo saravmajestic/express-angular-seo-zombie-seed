@@ -1,8 +1,19 @@
-<link rel="stylesheet" type="text/css" ng-href="{{globals.resourceUrl}}res/css/app/home.css"/>
 <section ng-controller="homeController">
     <h1>Home Page</h1>
     <p ng-if="globals.user != null">Your details:<br/>
 	Email : {{globals.user.email}} <br/>
 	Picture: <img ng-src="{{globals.user.picture}}" alt="{{globals.user.firstname}}"/>
+    </p>
+
+    <p ng-if="globals.user == null">
+    	You are not logged in. Please <a href="{{globals.ctxUrl}}auth">login/signup</a> to view your details.
+    </p>
+
+	<p>You can load css from css folder also</p>
+    <p class="homeCss">
+    	This CSS is loaded at <code>public/res/css/app/home.css</code>
+    </p>
+    <p class="helpCss">
+    	This CSS is loaded from a imported css at <code>public/res/css/app/help.css</code>
     </p>
 </section>

@@ -59,6 +59,14 @@
 //That loading sequence is controlled in page1.js.
 {
   //module names are relative to baseUrl/paths config
+  name: 'app/pages/root/rootCtrl',
+  exclude: ['./appBootstrap', 'lib/require-css/css.min'],
+  include : [
+  
+  ]
+},
+{
+  //module names are relative to baseUrl/paths config
   name: 'app/pages/home/homeCtrl',
   exclude: ['./appBootstrap', 'lib/require-css/css.min'],
   include : [
@@ -69,6 +77,15 @@
 {
   //module names are relative to baseUrl
   name: 'app/pages/auth/authCtrl',
+  exclude: ['./appBootstrap', 'lib/require-css/css.min'],
+  include : [
+    
+  ]
+},
+
+{
+  //module names are relative to baseUrl
+  name: 'app/pages/profile/profileCtrl',
   exclude: ['./appBootstrap', 'lib/require-css/css.min'],
   include : [
     
