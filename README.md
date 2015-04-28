@@ -71,3 +71,4 @@ NodeJS + ExpressJS + MongoDB + Angular (MEAN stack) with requireJS and using zom
 - Avoid adding logs to all folders. Currently logs are cumulatively added for lower levels. If log level is 5, all logs with levels < 4 will include logs of level 5. So it ie getting duplicated.
 - Control loading index.html for unhandled requests. Since I am using `*` in `routes.js`, if any the request is not handled, `index.html` will be loaded.
 - Client side caching data using [angular-cache](http://angular-data.pseudobry.com/documentation/api/angular-cache/angular-cache)
+- samples for image upload and compressing the uploaded images, using bcrypt for password encryption, using mandrill API to send mail, newrelic implementation
