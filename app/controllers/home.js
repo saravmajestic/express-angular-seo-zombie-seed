@@ -1,5 +1,6 @@
 exports.index = function(req, res){
 	logger.info("inside index");
+	server.locals.resourceUrl = app_config.resourceUrl || server.locals.ctxUrl;//For serving static resources (JS, CSS) and site images
 	
 	res.render('index', {zombie : req.zombie});
 };

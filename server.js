@@ -2,6 +2,9 @@ global.ROOT_PATH = __dirname;
 global.ENV = process.env.ENV || "development";
 exports = port = (process.env.PORT || 8080);
 
+exports = app_config = require(ROOT_PATH + '/config/'+ENV+'/app.json');
+exports = logger = require(ROOT_PATH + '/app/utils/log');
+
 process.on('uncaughtException', function(err) {
 	console.log('uncaughtException caught the error', err.message, err.stack);
 	logger.error('uncaughtException caught the error', err.message, err.stack);
@@ -20,19 +23,19 @@ var express = require('express'),
 	morgan = require('morgan'),
 	session = require('express-session'),
 	MongoStore = require('connect-mongo')(session),
-	device = require('express-device');
+	device = require('express-device'),
+	compress = require('compression');
 
-var server = express();
-exports = app_config = require(ROOT_PATH + '/config/'+ENV+'/app.json');
-
-exports = logger = require(ROOT_PATH + '/app/utils/log');
+exports = server = express();
 
 require(ROOT_PATH + '/app/utils/database');
 
 server.set('port', port);
+server.use(compress());  
 server.use(bodyParser.json());
 //https://github.com/expressjs/body-parser#bodyparserurlencodedoptions
-server.use(bodyParser.urlencoded({extended : true}));
+//5MB for image upload options
+server.use(bodyParser.urlencoded({extended : true, limit: '7mb'}));
 server.use(cookieParser());
 server.use(device.capture());
 server.set('views', __dirname + '/views');
@@ -62,11 +65,10 @@ server.use(methodOverride());
  * Override res.json to do any pre/post processing
  * https://gist.github.com/mrlannigan/5051687
  */
-if(ENV === "development" ){
+//if(ENV === "development" ){
 	server.use(function(req, res, next) {
 		var renderJson = res.json;
 		res.json = function(respObj, fn) {
-			console.log("in json");
 			var isJsonpCall = req.query.callback || req.body.callback;
 			var self = this;
 			//For local testing, returning jsonp response
@@ -79,26 +81,49 @@ if(ENV === "development" ){
 		};
 		next();
 	});
-}
+//}
+//uploaded files
 server.use('/res', express.static(path.join(__dirname, './dist/res')));
+
+exports = ipaddress = (process.env.OPENSHIFT_NODEJS_IP || process.env.NODEJS_IP);
+
 //Use this middleware only if you need SEO support for the pages
 if(app_config.enableZombie){
 	server.use(function(req, res, next){
 		//If request is from bots
-		if(req.device.type === 'bot' || (req.query && req.query['ngserver'] === 'true')){
+		//Exclude this for sitemaps
+		if((req.device.type === 'bot' || (req.query && req.query['ngserver'] === 'true')) && req.url.indexOf('sitemap.xml') == -1){
+			var ctxUrl = (ENV == 'production') ? app_config.ctxUrl : req.protocol + '://' + req.headers.host + "/";
+			ctxUrl = ctxUrl.slice(0, - 1);
 			//create a zombie browser with useragent as zombie
 			var Browser = require('zombie');
-			var browser = Browser.create();
+			var browser = Browser.create({localAddress : ipaddress});
 			browser.userAgent = "zombiejs";
-			//TODO: check this for prod env - ipaddress do we need this?
-			browser.visit('http://'+ipaddress+':' + port + (req.url.replace('ngserver','n')), function (err) {
+			logger.info("In SEO for BOT: ", {url : req.url, headers : req.headers});
+					
+			browser.visit(ctxUrl + (req.url.replace('ngserver','n')), function (err) {
+				var response = browser.resources[0].response;
 				if(err){
-					logger.error("Error in SEO: ", {stack : err.stack, message : err.message});
-					res.send(500);
+					logger.error("Error in SEO: ", {stack : err.stack, message : err.message, headers : req.headers});
+					res.status(response.statusCode); 
+					res.render('' + response.statusCode);
+					return;
 				}
-				var html = browser.html();
-				html = html.replace(/<script.*?>.*?<\/script>/gim, "")
+				
+				res.header('Content-Type', response.headers['content-type']);
+				var html = browser.body.innerHTML;
+				if(response.headers['content-type'].indexOf('text/html') != -1){
+					html = html.replace(/<script.*?>.*?<\/script>/gim, "");
+					//html = html.replace(/<link.*?stylesheet.*?>/gim, "");
+					//html = html.replace(/<style.*?>.*?<\/style>/gim, "");
+					html = html.replace(/(?:\r\n|\r|\n)/g, '');
+					html = '<!DOCTYPE html><html lang="en" class="no-js">' + html;
+					html = html.replace('<header>', '<body><header>');
+					html = html + '</body></html>';
+					logger.info('SEO response: ', req.url, html);
+				}
 				res.end(html);
+				browser.close();
 			});
 		}else{
 			next();
@@ -110,7 +135,17 @@ server.use(function(req, res, next){
 	if(req.zombie){
 		logger.info("Zombie request: " + req.url);
 	}
-	next();
+	var reqUrl = req.url;
+	if (reqUrl.indexOf('/') === 0){
+        reqUrl = reqUrl.substring(1);
+    }
+	//Redirect to www version if request url does not have www
+	if(ENV == 'production' && req.headers['host'] == 'chefhost.kitchen'){
+		res.redirect(301, app_config.ctxUrl + reqUrl);
+	}else{
+		server.locals.ctxUrl = app_config.ctxUrl || req.protocol + '://' + req.headers.host + "/";
+		next();
+	}
 });
 //Routes for all commands
 require('./routes.js')(server);
@@ -118,39 +153,24 @@ server.use(myErrorHandler);
 
 server.set('jsonp callback name', 'callback');
 
-exports = ipaddress = getIPAddress();
-
-server.locals.resourceUrl = app_config.resourceUrl || "http://" + ipaddress + ":" + port + "/";
-
+server.locals.node_name = process.env.APP_NAME;
+server.locals.env = ENV;
 server.listen(port, ipaddress, function() {
-	console.log('%s: Node server started on %s:%d ...', Date(Date.now()), ipaddress, port);
+	console.log('%s: Node server started on http://%s:%d ...', Date(Date.now()), (ipaddress || 'localhost'), port);
 });
 
 function myErrorHandler(err, req, res, next) {
-	logger.error("Error happened in %s", req.path, err.stack, err.message, err);
-	var extra = null;
-	if(ENV !== "production"){
-		extra = {stack : err.stack, message : err.message};
-	}
-	res.json({"isSuccess" : false, errMsg : "Internal error happened!", extra : extra});
-}
-
-function getIPAddress() {
-	var ipaddress = process.env.NODEJS_IP;
-	if (typeof ipaddress === "undefined") {
-		var os = require('os');
-		var ifaces = os.networkInterfaces();
-		for ( var dev in ifaces) {
-			var alias = 0;
-			ifaces[dev].forEach(function(details) {
-				if (details.family === 'IPv4') {
-					console.log(dev + (alias ? ':' + alias : ''), details.address);
-					ipaddress = details.address;
-					++alias;
-				}
-			});
+	logger.error("Error happened in %s", req.path, err.stack, err.message, err, req.headers);
+	
+	if(req.url.indexOf('/api/') == 0){
+		var extra = null;
+		if(ENV !== "production"){
+			extra = {stack : err.stack, message : err.message};
 		}
-		console.warn('No IP in env variables, now using ' + ipaddress);
+		res.json({"isSuccess" : false, errMsg : "Internal error happened!", extra : extra});
+	}else{
+		res.setHeader('Content-Type', 'text/html');
+		res.status(404); 
+		res.render('404');
 	}
-	return ipaddress;
 }

@@ -1,0 +1,14 @@
+<% if (environment  == 'production') { %>
+User-agent: *
+Disallow: /cgi-bin/
+Disallow: /contactus
+Disallow: /login
+Disallow: /facebook
+Disallow: /googleplus
+Disallow: /linkedin
+Disallow: /conciergeProcess
+Disallow: /feedback
+<% } else { %>
+User-agent: *
+Disallow: /
+<% } %>

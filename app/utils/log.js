@@ -1,15 +1,15 @@
  var winston = require("winston"),
  	date = require("./utils")
- 	, formattedDate = date.dateFormat(new Date(), "%Y_%m_%d", true),
+ 	, datePattern = '-yyyy-MM-dd.log',
  	path = require('path');
 
-winston.emitErrs = true;
+winston.emitErrs = false;
 
-var info = path.join(ROOT_PATH, app_config.logPath,  'info', formattedDate+'.log');
-var apprequest = path.join(ROOT_PATH, app_config.logPath,  'request', formattedDate+'.log');
-var error = path.join(ROOT_PATH, app_config.logPath,  'error', formattedDate+'.log');
-var exception = path.join(ROOT_PATH, app_config.logPath,  'exception', formattedDate+'.log');
-var dbquery = path.join(ROOT_PATH, app_config.logPath,  'query', formattedDate+'.log');
+var info = path.join(ROOT_PATH, app_config.logPath, 'info', 'info');
+var apprequest = path.join(ROOT_PATH, app_config.logPath, 'request', 'request');
+var error = path.join(ROOT_PATH, app_config.logPath, 'error', 'error');
+var exception = path.join(ROOT_PATH, app_config.logPath, 'exception', 'exception');
+var dbquery = path.join(ROOT_PATH, app_config.logPath, 'query', 'query');
 
 var config = {
 	  levels: {
@@ -41,17 +41,41 @@ var logger = new winston.Logger({
 	levels: config.levels,
 	colors: config.colors,
     transports: [
-	      new winston.transports.File({ filename: error, name : 'error', level: "error" , maxsize: 5242880}),  
-    	  new winston.transports.File({ filename: apprequest, name : 'apprequest', level: 'apprequest' , maxsize: 5242880}),
-    	  new winston.transports.File({ filename: info, name : 'info', level: "info",  maxsize: 5242880}),
-	      new winston.transports.File({ filename: dbquery, name : 'dbquery', level: 'dbquery' , maxsize: 5242880})
+	      new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: error, name : 'error', level: "error" , maxsize: 5242880}),  
+    	  new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: apprequest, name : 'apprequest', level: 'apprequest' , maxsize: 5242880}),
+    	  new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: info, name : 'info', level: "info",  maxsize: 5242880}),
+	      new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: dbquery, name : 'dbquery', level: 'dbquery' , maxsize: 5242880})
     ],
     handleExceptions: true,
     exceptionHandlers: [
-      new winston.transports.File({ filename: exception, maxsize: 5242880 })
+      new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: exception, maxsize: 5242880 })
     ]
   });
-  
+	//Send email to team when error happens in app
+  logger.on('logging', function (transport, level, msg, meta) {
+    if(level == 'error' && transport.name == 'error'){
+    	if(ENV == 'development'){
+    		console.log(msg, meta);
+    	}else{
+    		var mailDetails = {
+				to : [{
+		                "email": app_config.internal.error_email,
+		                "name": "Error"
+		            }],
+		        subject : "App error happened!"
+			};
+			var appData = {
+				'msg' : msg,
+				'meta' : meta,
+				'time' : new Date().toISOString(),
+				'node_name' : server.locals.node_name
+			};
+			emitter.emit('send_mail', 'errors.html', mailDetails, appData);
+    	}
+    }
+  });
+  logger.on('error', function (err) { console.log(err); });
+
   module.exports = logger;
   module.exports.stream = {
 	    write: function(message, encoding){
