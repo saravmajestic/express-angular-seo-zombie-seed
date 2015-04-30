@@ -19,7 +19,45 @@ exports.snapshot = function(req, res){
 			res.end(html);
 		});
 }
-
+exports.saveImage = function(req, res){
+	var data = req.body;
+	
+	require('../utils/utils').saveFile(data.image, data.fileName, '/', 
+		function(err, finalFileName){
+			res.json({isSuccess : true, err : err, data : finalFileName});
+	});
+};
+exports.saveFile = function(req, res){
+	var busboy = require('connect-busboy');
+ 	var fileName = null;
+	req.busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+	    var fx = require("fs-extra");
+	    var fs = require("fs");
+	    fileName = filename;
+	    var uploadRootPath = DATA_DIR + app_config.uploadPath;
+  		var fileDirPath = '';//any specific folder
+		var fileUploadPath = uploadRootPath + fileDirPath;
+		
+		  logger.info("saveFile: Saving file: in path: %s/%s" ,fileUploadPath, filename);
+		  var fx = require("fs-extra");
+		  fx.ensureDir(fileUploadPath, function(err) {
+		    if(err){
+		    	logger.error('Not able to create folder: ', fileUploadPath, err);
+		    	res.json({isSuccess : false});
+		    }else{
+		    	file.pipe(fs.createWriteStream((fileUploadPath + filename)));
+		    }
+		  });
+	  });
+	  req.busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
+	    console.log(arguments);
+	  });
+	  req.busboy.on('finish', function() {
+	  	logger.info('file uploaded:', fileName);
+	  	res.json({isSuccess : true, fileName : fileName});
+	  });
+	  req.pipe(req.busboy);
+};
 exports.upload = function(req, res){
 		var service_account_name = app_config.google.service_account_name;
 		var key_file_location = ROOT_PATH + '/keys/google/' + app_config.google.key;

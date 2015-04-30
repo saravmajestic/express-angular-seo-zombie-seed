@@ -16,4 +16,26 @@
     <p class="helpCss">
     	This CSS is loaded from a imported css at <code>public/res/css/app/help.css</code>
     </p>
+    <p>
+        <h2>Upload an image</h2>
+        <label class="uploadPhoto">Upload
+        <input id="fileInput" name="fileInput" type="file" onchange="angular.element(this).scope().loadImageFileAsURL(this.files[0])" />
+        </label>
+        <br/>
+        <b ng-if="imageFile">Uploaded Image:</b><img ng-src="/static/{{imageFile}}" style="max-width:200px;max-height:200px"/>
+    </p>
+    <p>
+        <h2>Upload a file</h2>
+        <input type="file" name="resume" id="resume" onchange="angular.element(this).scope().saveFile(this.files)">
+        
+        <div class="row">
+            <div ng-show="progressVisible" class="mar-top10 col-xs-12 col-sm-6 progressDiv">
+                <div class="percent">{{progress}}%</div>
+                <div class="progress-bar">
+                    <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                </div>
+            </div>
+        </div>
+        <b ng-if="file">Uploaded file:</b><a ng-href="/static/{{file}}" target="_blank">{{file}}</a>
+    </p>
 </section>

@@ -1,7 +1,7 @@
 global.ROOT_PATH = __dirname;
 global.ENV = process.env.ENV || "development";
 exports = port = (process.env.PORT || 8080);
-
+global.DATA_DIR = process.env.OPENSHIFT_DATA_DIR || ROOT_PATH;
 exports = app_config = require(ROOT_PATH + '/config/'+ENV+'/app.json');
 exports = logger = require(ROOT_PATH + '/app/utils/log');
 
@@ -48,6 +48,11 @@ server.use(session({
     secret: 'secret',
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
+server.use(require('connect-busboy')({
+  limits: {
+    fileSize: 7 * 1024 * 1024//4 MB
+  }
+}));
 morgan.token('sessionId',
 		function (req, res) {
 		    if (!req.session) return '~'; // should never happen
@@ -82,8 +87,9 @@ server.use(methodOverride());
 		next();
 	});
 //}
-//uploaded files
 server.use('/res', express.static(path.join(__dirname, './dist/res')));
+//uploaded files
+server.use('/static', express.static(path.join(global.DATA_DIR, app_config.uploadPath)));
 
 exports = ipaddress = (process.env.OPENSHIFT_NODEJS_IP || process.env.NODEJS_IP);
 

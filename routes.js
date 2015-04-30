@@ -12,6 +12,8 @@ module.exports = function(server) {
 
     server.get('/api/upload', home.upload);
     server.get('/api/snapshot', home.snapshot);
+    server.post('/api/image', home.saveImage);
+    server.post('/api/file', home.saveFile);
 
     server.get('/oauth', function(req, res){
     	res.render('oauth');
