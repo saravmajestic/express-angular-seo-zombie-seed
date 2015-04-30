@@ -87,7 +87,17 @@ server.use(methodOverride());
 		next();
 	});
 //}
-server.use('/res', express.static(path.join(__dirname, './dist/res')));
+server.use('/res', express.static(path.join(__dirname, './dist/res'), {
+	setHeaders : function(res, path){
+		if(ENV !== 'development'){
+			var currentDate = new Date();
+			currentDate.setYear(2020);
+			res.setHeader('Cache-Control', 'public, max-age=31556940');
+			res.setHeader('expires', currentDate);
+		}
+	}
+}));
+
 //uploaded files
 server.use('/static', express.static(path.join(global.DATA_DIR, app_config.uploadPath)));
 
