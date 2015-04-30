@@ -17,7 +17,7 @@ NodeJS + ExpressJS + MongoDB + Angular (MEAN stack) with requireJS and using zom
 
 ##Basic requirements for a site##
 
-- Miniumum number of http requests
+- Minimum number of http requests
 - Single Page application in client side
 - SEO support
 - Logging - load my db queries, http requests received and error logs separately. This will be helpful for tracking
@@ -51,6 +51,7 @@ NodeJS + ExpressJS + MongoDB + Angular (MEAN stack) with requireJS and using zom
 - The above gulp task will also start the server through this command: `node --debug server` and display the IP address and port in which it is started. Optionally, you can use `supervisor` by uncommenting `supervisor -i "public,dist,views" --debug server` and commenting `node --debug server` in `server` task
 - The above task will also listen for changes inside `public` folder and re builds the resources whenever there is a change. [livereload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) is enabled along with this task.
 - For checking SEO page(angularJS page rendered from server side), add ```ngserver=true``` to the page URL. ex: `http://<ipaddress>:<port>/?ngserver=true`. This will render html content of your root (/) page
+- file uploads - also handles heavy compression logic using ```imagemin-jpeg-recompress``` for jpeg files. Page:  ```\home```
 
 
 ##How to add new page##
@@ -68,7 +69,7 @@ NodeJS + ExpressJS + MongoDB + Angular (MEAN stack) with requireJS and using zom
 ###Coming soon###
 
 - load combined view files instead of separate partials for each page
-- Avoid adding logs to all folders. Currently logs are cumulatively added for lower levels. If log level is 5, all logs with levels < 4 will include logs of level 5. So it ie getting duplicated.
+- Avoid adding logs to all folders. Currently logs are cumulatively added for lower levels. If log level is 5, all logs with levels < 4 will include logs of level 5. So it is getting duplicated.
 - Control loading index.html for unhandled requests. Since I am using `*` in `routes.js`, if any the request is not handled, `index.html` will be loaded.
 - Client side caching data using [angular-cache](http://angular-data.pseudobry.com/documentation/api/angular-cache/angular-cache)
-- samples for image upload and compressing the uploaded images, using bcrypt for password encryption, using mandrill API to send mail, newrelic implementation
+- samples for using bcrypt for password encryption, using mandrill API to send mail, newrelic implementation
