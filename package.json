@@ -54,6 +54,7 @@
     "optional": "0.1.3",
     "stream-combiner2": "1.0.2",
     "through2": "0.6.5",
+    "validator": "3.39.0",
     "vinyl-fs": "1.0.0",
     "winston": "0.8.3",
     "zombie": "2.5.1"
