@@ -24,7 +24,7 @@ define([
         $rootScope.globals = {
             "resourceUrl" : pageConfig.resourceUrl,
             'ctxUrl' : ctxUrl,
-            "user" : null
+            "user" : pageConfig.user
         };
 
         //Method to update page meta

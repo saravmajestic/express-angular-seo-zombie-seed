@@ -28,6 +28,13 @@ var express = require('express'),
 
 exports = server = express();
 
+//Resource version for cache busting
+if(!app_config.resVersion){
+	app_config.resVersion = Math.floor(Math.random() * (1001));
+}
+server.locals.res_version = app_config.resVersion;
+
+
 require(ROOT_PATH + '/app/utils/database');
 
 server.set('port', port);

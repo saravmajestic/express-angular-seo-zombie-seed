@@ -30,3 +30,58 @@ h1{
 footer{
     
 }
+.status-bar, .spinner{
+  position: fixed;
+  z-index: 1053;
+  width: 100%;
+  text-align: center;
+    background: #ccc;
+  top: 0;
+}
+.status-bar.alert-dismissable .close{
+    display: block !important;
+}
+.center{
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: absolute !important;
+    margin:0 auto;
+    width:100%;
+    left:0;
+}
+.spinner{
+  /*Should be lesser than status bar so status bar will show above spinner if needed*/
+  z-index: 1051;
+  height: 100%;
+  top: 0;
+  left: 0;
+  color:#fff;
+    background-color: rgba(0,0,0,0.5);
+}
+.spinner div{
+    font-size: 20px;
+}
+.spinner .glyphicon{
+    font-size: 36px;
+    display: block;
+    margin-left: -16px;
+    margin-bottom: 5px;
+}
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}

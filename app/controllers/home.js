@@ -1,8 +1,9 @@
 exports.index = function(req, res){
-	logger.info("inside index");
+	var user = req.session ? req.session.user : null;
+	
 	server.locals.resourceUrl = app_config.resourceUrl || server.locals.ctxUrl;//For serving static resources (JS, CSS) and site images
 	
-	res.render('index', {zombie : req.zombie});
+	res.render('index', {zombie : req.zombie, user : user});
 };
 
 exports.snapshot = function(req, res){

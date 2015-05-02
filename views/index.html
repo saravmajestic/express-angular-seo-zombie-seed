@@ -20,14 +20,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <script>
     var pageConfig = {
-      resourceUrl : '<%= resourceUrl %>'
+      resourceUrl : '<%= resourceUrl %>',
+      user : <%- JSON.stringify(user) %>,
+      rv : '<%= res_version %>'
     }
   </script>
   <link rel="stylesheet" type="text/css" href="<%= resourceUrl %>res/css/app.css"/>
   <script data-main="<%= resourceUrl %>res/js/appBootstrap" src="/res/js/lib.js"></script>
 </head>
 
-<body>
+<body ng-controller="headerController">
   <!-- Header -->
   <ng-include src="'/includes/header.html'"></ng-include>
   <!-- End Header -->
@@ -37,10 +39,23 @@
   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   
-  <!-- ng view area -->
-  <div class="mainContent">
-    <div ng-view></div>
+  <div class="status-bar alert alert-dismissable {{status.type}}" ng-if="status.showStatus">
+    <button ng-show="closeable" type="button" class="close" ng-click="status.showStatus = false;">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-bind-html="status.message"></div>
   </div>
+
+  <div class="spinner" ng-if="spinner.show">
+    <div class="center">
+      <span class="glyphicon glyphicon-repeat glyphicon-refresh-animate"></span>
+      <span ng-bind-html="spinner.message"></span>
+    </div>
+  </div>
+
+  <!-- ng view area -->
+  <div id="mainContent" ng-init="onAppLoad();" ng-view autoscroll=""></div>
   <!-- end ng view area -->
 
   <!-- End Main content area -->

@@ -24,22 +24,21 @@ define(['appModule','lib/hello.min', 'app/pages/auth/authSvc', 'css!./auth'], fu
                     	password : ""
                     };
                     $scope.dologin = function(){
+                      $scope.showPageLoading("Please wait...");
 					authService.doLogin($scope.loginData).then(function(resp){
                     		$scope.afterAuth(resp);
-                    	}, function(err){
-                    		alert(err.errMsg);
-                    	});
+                    	}, $scope.showErrorMsg);
                     };
                     $scope.afterAuth = function(resp){
+                      $scope.hidePageLoading();
                       $rootScope.$broadcast('user_login',{data : resp.user});
                               $timeout(function(){$location.url('/');},200);
                     };
                     $scope.doSignup = function(){
+                      $scope.showPageLoading("Please wait...");
                     	authService.doSignup($scope.signupData).then(function(resp){
                     		$scope.afterAuth(resp);
-                    	}, function(err){
-                    		alert(err.errMsg);
-                    	});
+                    	}, $scope.showErrorMsg);
                     };
 
                     $scope.onLoginPageLoad = function(){
