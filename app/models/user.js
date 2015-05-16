@@ -1,5 +1,5 @@
 var Validator 	= require('validator').Validator, utils 	= require('../utils/utils'),
-    crypto 		= require('crypto');
+    crypto 		= require('crypto'), bcrypt = require('bcrypt-nodejs');
 
 var exports = module.exports = UserSchema = new mongoose.Schema({},{collection : 'user'});
 
@@ -9,7 +9,7 @@ UserSchema.add({
     provider:   {type: String, index: true, unique: false },
 	password: 	{type: String, select: false},
   	first_name: 	{type: String, default : '', required : false, index: true },
-  	lastname: 	{type: String, default : '', required : false, index: true },
+  	last_name: 	{type: String, default : '', required : false, index: true },
   	picture: 	{type: String, default : '', index: true },
     gender: 	{type: String, default : '', index: false },
     dob: 		{type: Date},
@@ -54,7 +54,7 @@ UserSchema.statics.login = function(email, password, callback) {
 		if (err) callback(err, null);
 		if(user) {
 
-			if (user.email && user.password === User.sign(password, 'md5')) {
+            if (user.email && bcrypt.compareSync(password, user.password)){
 				callback(null, user);
 			} else {
 				callback("Invalid password.", null);
@@ -87,7 +87,7 @@ UserSchema.statics.signup = function(data, callback) {
 
   //For social signups, we will not have password
   if(data.password){
-    data.password = User.sign(data.password, 'md5');
+    data.password = bcrypt.hashSync(data.password);
   }
 	//TODO: verify whether "pre" is getting called when saving this document after updating to mongoose 3.9.8
 	/*User.findOneAndUpdate({'email' : params.email}, {$set : params}, {upsert : true, new : true}, function(err, user){

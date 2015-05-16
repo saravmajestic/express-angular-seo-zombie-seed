@@ -73,3 +73,6 @@ NodeJS + ExpressJS + MongoDB + Angular (MEAN stack) with requireJS and using zom
 - Control loading index.html for unhandled requests. Since I am using `*` in `routes.js`, if any the request is not handled, `index.html` will be loaded.
 - Client side caching data using [angular-cache](http://angular-data.pseudobry.com/documentation/api/angular-cache/angular-cache)
 - samples for using bcrypt for password encryption, using mandrill API to send mail, newrelic implementation
+
+###If SEO is not working###
+- Add JS controller to build.js file. If you have imported css file in controller, SEO is not working

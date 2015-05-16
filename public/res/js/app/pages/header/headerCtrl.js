@@ -21,11 +21,17 @@ define(['controllerModule', 'app/pages/auth/authSvc'], function (controllers) {
 	            $scope.logout = function(){
 	            	authService.doLogout().then(function(resp){
 	                    $rootScope.globals.user = null;
+	                    $location.url('/');
 	                }, function(err){
 	                    console.log(err);
 	                });
 	            };
-	            $scope.hidePageLoading = function(){
+	            
+	            $scope.spinner = {
+            		show : false,
+            		message : null
+            	};
+				$scope.hidePageLoading = function(){
 					$scope.spinner.show = false;
 				};
 				$scope.showPageLoading = function(message){

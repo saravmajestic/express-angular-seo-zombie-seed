@@ -1,5 +1,12 @@
 'use strict';
+//For old IE browsers and in prod suppress all console logs
+if(pageConfig.env == 'production' || typeof console == 'undefined'){
+    console = {
+        log : function(){
 
+        }
+    };
+}
 require.config({
 		baseUrl : 'res/js',
     paths: {
@@ -23,6 +30,11 @@ require.config({
         'angularSanitize': {deps : ['angular']}
     },
     priority: ['angular']
+});
+
+require.config({
+    waitSeconds: 15,
+    urlArgs : 'v=' + pageConfig.rv
 });
 
 //http://code.angularjs.org/1.2.1/docs/guide/bootstrap#overview_deferred-bootstrap
