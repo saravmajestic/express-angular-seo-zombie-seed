@@ -113,6 +113,12 @@ exports = ipaddress = (process.env.OPENSHIFT_NODEJS_IP || process.env.NODEJS_IP)
 //Use this middleware only if you need SEO support for the pages
 if(app_config.enableZombie){
 	server.use(function(req, res, next){
+		//When trying to share our url in google plus 
+		//Ex: Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20110814 Firefox/6.0 Google (+https://developers.google.com/+/web/snippet/)
+		if(req.headers['user-agent'].indexOf('developers.google.com') != -1){
+			req.device.type = 'bot';
+		}
+		
 		//If request is from bots
 		//Exclude this for sitemaps
 		if((req.device.type === 'bot' || (req.query && req.query['ngserver'] === 'true')) && req.url.indexOf('sitemap.xml') == -1){
