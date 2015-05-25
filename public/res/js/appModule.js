@@ -93,6 +93,21 @@ define([
                 }
 
     }]);
+	app.config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.interceptors.push(['$q', function($q) {
+          return {
+           'request': function(config) {
+               if(config.url && config.url.indexOf('/res/') == 0){
+                config.url = config.url.replace('.html', '.html'+ '?v=' + pageConfig.rv);
+               }
+               return config;
+            },
 
+            'response': function(response) {
+               return response;
+            }
+          };
+        }]);
+    }]);
     return app;
 });
