@@ -39,7 +39,7 @@
   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   
-  <div class="status-bar alert alert-dismissable {{status.type}}" ng-if="status.showStatus">
+  <div class="status-bar alert alert-dismissable {{status.type}}" ng-class="{'show' : status.type}" ng-if="status.showStatus">
     <button ng-show="closeable" type="button" class="close" ng-click="status.showStatus = false;">
         <span aria-hidden="true">&times;</span>
         <span class="sr-only">Close</span>

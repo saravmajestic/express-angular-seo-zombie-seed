@@ -30,6 +30,12 @@ h1{
 footer{
     
 }
+.status-bar{
+  display: none;
+}
+.status-bar.show{
+  display: block;
+}
 .status-bar, .spinner{
   position: fixed;
   z-index: 1053;
@@ -72,16 +78,30 @@ footer{
     margin-bottom: 5px;
 }
 .glyphicon-refresh-animate {
-    -animation: spin .7s infinite linear;
+    animation: spin2 .7s infinite linear;
     -webkit-animation: spin2 .7s infinite linear;
+    -moz-animation: spin2 .7s infinite linear;
+    -ms-animation: spin2 .7s infinite linear;
+    -o-animation: spin2 .7s infinite linear;
 }
 
 @-webkit-keyframes spin2 {
-    from { -webkit-transform: rotate(0deg);}
-    to { -webkit-transform: rotate(360deg);}
+    0% { -webkit-transform: rotate(0deg);-moz-transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% { -webkit-transform: rotate(360deg);-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);}
 }
-
-@keyframes spin {
-    from { transform: scale(1) rotate(0deg);}
-    to { transform: scale(1) rotate(360deg);}
+@-moz-keyframes spin2 {
+    0% { -webkit-transform: rotate(0deg);-moz-transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% { -webkit-transform: rotate(360deg);-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);}
+}
+@-ms-keyframes spin2 {
+    0% { -webkit-transform: rotate(0deg);-moz-transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% { -webkit-transform: rotate(360deg);-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);}
+}
+@-o-keyframes spin2 {
+    0% { -webkit-transform: rotate(0deg);-moz-transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% { -webkit-transform: rotate(360deg);-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);}
+}
+@keyframes spin2 {
+    0% { -webkit-transform: rotate(0deg);-moz-transform: rotate(0deg);-ms-transform: rotate(0deg);}
+    100% { -webkit-transform: rotate(360deg);-moz-transform: rotate(360deg);-ms-transform: rotate(360deg);}
 }
