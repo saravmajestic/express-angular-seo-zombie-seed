@@ -11,6 +11,9 @@ define(['controllerModule', 'app/pages/auth/authSvc'], function (controllers) {
 	             	$scope.getMe();   
 	            };
 	            $scope.getMe = function(){
+	            	if(!$rootScope.globals.user){
+	            		return;
+	            	}
 	            	authService.getMe().then(function(resp){
 	            		console.log(resp);
 	                    $rootScope.globals.user = resp.user;
