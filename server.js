@@ -125,8 +125,10 @@ if(app_config.enableZombie){
 			var ctxUrl = (ENV == 'production') ? app_config.ctxUrl : req.protocol + '://' + req.headers.host + "/";
 			ctxUrl = ctxUrl.slice(0, - 1);
 			//create a zombie browser with useragent as zombie
-			var Browser = require('zombie');
-			var browser = Browser.create({localAddress : ipaddress});
+			//create a zombie browser with useragent as zombie
+			const Browser = require('zombie');
+			// var browser = Browser.create({localAddress : ipaddress});
+			const browser = new Browser();
 			browser.userAgent = "zombiejs";
 			logger.info("In SEO for BOT: ", {url : req.url, headers : req.headers});
 					
@@ -139,9 +141,9 @@ if(app_config.enableZombie){
 					return;
 				}
 				
-				res.header('Content-Type', response.headers['content-type']);
-				var html = browser.body.innerHTML;
-				if(response.headers['content-type'].indexOf('text/html') != -1){
+				res.header('Content-Type', response.headers.get('content-type'));
+				var html = browser.html();
+				if(response.headers.get('content-type').indexOf('text/html') != -1){
 					html = html.replace(/<script.*?>.*?<\/script>/gim, "");
 					//html = html.replace(/<link.*?stylesheet.*?>/gim, "");
 					//html = html.replace(/<style.*?>.*?<\/style>/gim, "");
@@ -152,7 +154,7 @@ if(app_config.enableZombie){
 					logger.info('SEO response: ', req.url, html);
 				}
 				res.end(html);
-				browser.close();
+				browser.destroy();
 			});
 		}else{
 			next();

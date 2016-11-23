@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": false,
   "scripts": {
-    "start": "node server.js"
+    "start": "./node_modules/.bin/gulp"
   },
   "keywords": [
     "angular",
