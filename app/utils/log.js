@@ -1,4 +1,5 @@
- var winston = require("winston"),
+ var winston = require("winston")
+ dailyRotate = require('winston-daily-rotate-file'),
  	date = require("./utils")
  	, datePattern = '-yyyy-MM-dd.log',
  	path = require('path');
@@ -41,14 +42,14 @@ var logger = new winston.Logger({
 	levels: config.levels,
 	colors: config.colors,
     transports: [
-	      new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: error, name : 'error', level: "error" , maxsize: 5242880}),  
-    	  new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: apprequest, name : 'apprequest', level: 'apprequest' , maxsize: 5242880}),
-    	  new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: info, name : 'info', level: "info",  maxsize: 5242880}),
-	      new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: dbquery, name : 'dbquery', level: 'dbquery' , maxsize: 5242880})
+	      new dailyRotate({ datePattern: datePattern, filename: error, name : 'error', level: "error" , maxsize: 5242880}),  
+    	  new dailyRotate({ datePattern: datePattern, filename: apprequest, name : 'apprequest', level: 'apprequest' , maxsize: 5242880}),
+    	  new dailyRotate({ datePattern: datePattern, filename: info, name : 'info', level: "info",  maxsize: 5242880}),
+	      new dailyRotate({ datePattern: datePattern, filename: dbquery, name : 'dbquery', level: 'dbquery' , maxsize: 5242880})
     ],
     handleExceptions: true,
     exceptionHandlers: [
-      new winston.transports.DailyRotateFile({ datePattern: datePattern, filename: exception, maxsize: 5242880 })
+      new dailyRotate({ datePattern: datePattern, filename: exception, maxsize: 5242880 })
     ]
   });
 	//Send email to team when error happens in app

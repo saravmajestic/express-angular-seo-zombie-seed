@@ -21,7 +21,7 @@
   <script>
     var pageConfig = {
       resourceUrl : '<%= resourceUrl %>',
-      user : <%- JSON.stringify(user) %>,
+      user : <%if (user != null){%> <%- JSON.stringify(user) %><% }else { %> null <% } %>,
       rv : '<%= res_version %>'
     }
   </script>
