@@ -5,65 +5,24 @@ function errorLog(error) {
   this.emit('end');
 }
 
-// Scripts Task
-// Uglify
-var uploadFn = function (dirPath) {
-  try{
-    var ENV = "development";
-    var app_config = require(__dirname + '/config/'+ENV+'/app.json');
-    var service_account_name = app_config.google.service_account_name;
-    var key_file_location = ROOT_PATH + '/keys/google/' + app_config.google.key;
-
-    var CloudStorage = require('cloud-storage');
-    var storage = new CloudStorage({
-      accessId: service_account_name,
-      privateKey: key_file_location
-    });
-    var currentDate = new Date();
-    currentDate.setYear(2020);
-    // if you want to get crazy you can pass in options and metadata
-    var options = {
-      headers: {
-        'Cache-Control': 'public,max-age=31556940',
-        'X-Goog-Acl': 'public-read'
-      },
-      metadata: {
-        'expires': currentDate
-      },
-
-      // force an extension to be added to the destination
-      forceExtension: true
-    };
-
-    var fs = require('fs');
-    var async = require('async');
-    var version = "0.1";
-
-    var files = fs.readdirSync(__dirname + '/dist/' + dirPath);
-    async.eachSeries(files, function(file, callback){
-      console.log("Uploading file: " + (__dirname + '/dist/'+dirPath+'/' + file));
-      storage.copy(__dirname + '/dist/'+dirPath+'/' + file, 'gs://'+app_config.google.bucket+'/'+version+'/'+dirPath+'/'+ file, options, function(err, url) {
-        if(err)
-          console.log(err);
-        else
-          console.log("Upload completed: " + (__dirname + '/dist/'+dirPath+'/' + file));
-        callback();
-      });
-    }, function(err){
-      if(err)
-      console.log("Error: ", err);
-    });
-
-    }catch(err){
-      if(err)
-      console.log("Error: ", err);
-    }
-  };
-gulp.task('uploadJS', function(){
-  uploadFn('js');
+/* -- JSHINT ---- */
+var jshint = require('gulp-jshint');
+gulp.task('jshint', function() {
+  return gulp.src('./app/*/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
 });
-gulp.task('uploadCSS', function(){
-  uploadFn('css');
+
+/* -- JSCS ---- */
+var file = 'models/data.js';
+var jscs = require('gulp-jscs');
+gulp.task('jscs', function () {
+    return gulp.src('./app/' + file)
+        .pipe(jscs({
+            //fix: true,
+            preset : 'node-style-guide'
+        }))
+        .pipe(gulp.dest('./app/models'));;
 });
 
 // --------------------------------------------------
@@ -79,18 +38,24 @@ gulp.task('build', function(){
 });
 //Run server after running the build - to make it serial
 gulp.task('server', ['build'], shell.task([
-  'node --debug server'
-  //'supervisor -i "public,dist,views" --debug server'
+  'killall node &',//kill other previous node process
+  "sudo lsof -i TCP:27017 | grep LISTEN | awk '{print $2}' | sudo xargs kill -9",//Kill mongodb
+  'sudo mongod --dbpath ./logs/mongo/db  --fork --logpath ./logs/mongo/mongod.log',//start mongodb
+  'forever -o out.log -e err.log --watchDirectory app --watch -c "node -r dotenv/config --debug" server.js'
 ]))
+
+// gulp.task('server', ['build'], shell.task([
+//   'node server.js'
+// ]))
 
 // Watch Task
 // Watches JS
 gulp.task('watch', function () {
   livereload.listen(); // Calling lister on livereload task, which will start listening for livereload client.
-  gulp.watch('public/res/**/*', ['build']);
+  gulp.watch(['public/res/**/*', '!public/res/uploads'], ['build']);
   // gulp.watch('public/res/js/**/*.js', ['build']);
   //gulp.watch('public/res/css/**/*.css', ['build']);
   //gulp.watch('public/res/js/**/*.html', ['build']);
 });
 // gulp.task('default', ['uploadJS', 'uploadCSS']);
-gulp.task('default', ['build', 'server', 'watch']);
+gulp.task('default', ['watch', 'server']);

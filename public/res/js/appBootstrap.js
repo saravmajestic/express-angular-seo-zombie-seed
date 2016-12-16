@@ -12,10 +12,10 @@ require.config({
     paths: {
         routeResolve: 'routeResolve',
 				'domReady': 'lib/domReady',
-				angular: 'lib/angular',
-        angularRoute: 'lib/angular-route',
-        angularResource: 'lib/angular-resource',
-        angularSanitize: 'lib/angular-sanitize',
+				angular: 'lib/angular.min',
+        angularRoute: 'lib/angular-route.min',
+        angularResource: 'lib/angular-resource.min',
+        angularSanitize: 'lib/angular-sanitize.min',
         cssPath : '../css'
     },
     map: {

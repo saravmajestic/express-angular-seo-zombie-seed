@@ -7,3 +7,5 @@ TODO.txt
 *.log
 mongo.log*
 *.pem
+logs/mongo/mongod.log*
+logs/mongo/*
